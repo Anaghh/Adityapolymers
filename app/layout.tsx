@@ -39,7 +39,7 @@ export const viewport: Viewport = {
   // No maximumScale — pinch zoom stays enabled (accessibility trust signal).
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"

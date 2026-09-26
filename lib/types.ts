@@ -87,4 +87,7 @@ export type DownloadDoc = {
   version: string;
   productId: string | null;
   publishedAt: string | null;
+  /** Storage path inside the `documents` bucket. */
+  filePath: string | null;
+  fileSize: number | null;
 };

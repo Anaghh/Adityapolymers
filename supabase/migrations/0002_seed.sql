@@ -2,11 +2,18 @@
 -- Mirrors content/catalog.ts. Spec values stay null until client TDS arrives.
 
 -- Categories ---------------------------------------------------------------
+-- Parents and children are separate statements: a multi-row VALUES insert
+-- cannot see rows inserted by itself, so child rows referencing their
+-- parent by slug would all get parent_id = NULL.
 insert into categories (slug, parent_id, name, short_name, description, sort_order) values
   ('synthetic', null, 'Synthetic Adhesives', 'Synthetic',
    'PVA/VAM-based synthetic adhesives for textile tubes, paper conversion and food-grade packaging, manufactured under the Dr Bond brand.', 1),
   ('packaging', null, 'Packaging Adhesives', 'Packaging',
    'Paper conversion, lamination, labeling and starch-based (dextrin) adhesives for corrugated boxes, paper tubes and cores, composite cans and fibre drums.', 2),
+  ('wood-working', null, 'Wood Working & Furniture Adhesives', 'Wood Working',
+   'Furniture-grade PVA adhesives from premium to general purpose, including a water-resistant grade for demanding joinery.', 7);
+
+insert into categories (slug, parent_id, name, short_name, description, sort_order) values
   ('paper-conversion', (select id from categories where slug = 'packaging'), 'Paper Conversion Adhesives', 'Paper Conversion',
    'Synthetic homopolymer adhesives for paper-to-paper pasting across paper and textile tubes, agarbatti tubes, mailing tubes, composite cans and fibre drums. Customised grades developed against customer requirement.', 3),
   ('lamination', (select id from categories where slug = 'packaging'), 'Lamination Adhesives', 'Lamination',
@@ -14,9 +21,7 @@ insert into categories (slug, parent_id, name, short_name, description, sort_ord
   ('labeling', (select id from categories where slug = 'packaging'), 'Labeling Adhesives', 'Labeling',
    'Labeling adhesives for the packaging industry that stick to paper, metal and other surfaces, available in various sizes, shapes and colours.', 5),
   ('starch-based-dextrin', (select id from categories where slug = 'packaging'), 'Starch Based Adhesives (Dextrin)', 'Starch / Dextrin',
-   'Cold-mix and hot-mix dextrin grades for paper tubes, cores, edge guards and fibre drums, plus pasting and corrugation grades for carton making.', 6),
-  ('wood-working', null, 'Wood Working & Furniture Adhesives', 'Wood Working',
-   'Furniture-grade PVA adhesives from premium to general purpose, including a water-resistant grade for demanding joinery.', 7);
+   'Cold-mix and hot-mix dextrin grades for paper tubes, cores, edge guards and fibre drums, plus pasting and corrugation grades for carton making.', 6);
 
 -- Products -----------------------------------------------------------------
 insert into products (category_id, slug, sku, name, brand, short_description, description, applications, specs, is_retail_pack) values

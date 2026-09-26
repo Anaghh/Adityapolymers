@@ -65,7 +65,7 @@ export async function getCategories(): Promise<Category[]> {
   if (db) {
     try {
       const { data, error } = await unstable_cache(
-        () => db.from("categories").select("*").eq("is_active", true).order("sort_order"),
+        async () => db.from("categories").select("*").eq("is_active", true).order("sort_order"),
         ["categories"],
         { tags: [TAG_ALL, "categories"], revalidate: 3600 },
       )();
@@ -90,7 +90,7 @@ export async function getProducts(): Promise<Product[]> {
   if (db) {
     try {
       const { data, error } = await unstable_cache(
-        () => db.from("products").select("*, categories(slug, name)").eq("is_active", true),
+        async () => db.from("products").select("*, categories(slug, name)").eq("is_active", true),
         ["products"],
         { tags: [TAG_ALL, "products"], revalidate: 3600 },
       )();
@@ -170,7 +170,7 @@ export async function getLocations(): Promise<LocationEntry[]> {
   if (db) {
     try {
       const { data, error } = await unstable_cache(
-        () => db.from("locations_served").select("*").eq("is_active", true).order("sort_order"),
+        async () => db.from("locations_served").select("*").eq("is_active", true).order("sort_order"),
         ["locations"],
         { tags: [TAG_ALL, "locations"], revalidate: 3600 },
       )();
@@ -208,7 +208,7 @@ export async function getSiteSettings(): Promise<{
   if (db) {
     try {
       const { data, error } = await unstable_cache(
-        () => db.from("site_settings").select("value").eq("key", "contact").maybeSingle(),
+        async () => db.from("site_settings").select("value").eq("key", "contact").maybeSingle(),
         ["site-settings"],
         { tags: [TAG_ALL, "site-settings"], revalidate: 3600 },
       )();
@@ -240,7 +240,7 @@ export async function getPlants(): Promise<Plant[]> {
   if (db) {
     try {
       const { data, error } = await unstable_cache(
-        () => db.from("plants").select("*").order("sort_order"),
+        async () => db.from("plants").select("*").order("sort_order"),
         ["plants"],
         { tags: [TAG_ALL, "plants"], revalidate: 3600 },
       )();

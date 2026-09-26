@@ -3,6 +3,26 @@
 -- The Next server reads with the anon key; the service-role key is used only
 -- inside server-only route handlers.
 
+-- Extensions first: the trigram index below needs gin_trgm_ops.
+-- pg_trgm may already be installed on the project (Dashboard toggle or an
+-- earlier partial run) in `public` OR `extensions`. `create extension if not
+-- exists ... with schema extensions` is not enough on its own: when the
+-- extension already lives elsewhere the statement no-ops successfully and the
+-- schema-qualified `extensions.gin_trgm_ops` reference in the index then
+-- fails with 42704. Install only when missing; the index resolves the
+-- schema that actually holds the extension (see products_sku_trgm_idx).
+do $$
+begin
+  if not exists (select 1 from pg_extension where extname = 'pg_trgm') then
+    if exists (select 1 from pg_namespace where nspname = 'extensions') then
+      create extension pg_trgm with schema extensions;
+    else
+      create extension pg_trgm;
+    end if;
+  end if;
+end
+$$;
+
 create type enquiry_type as enum ('rfq', 'sample', 'dealer');
 create type enquiry_status as enum ('new', 'contacted', 'quoted', 'won', 'lost', 'spam');
 create type download_kind as enum ('tds', 'sds', 'brochure');
@@ -58,7 +78,29 @@ alter table products
     || setweight(to_tsvector('english', coalesce(description, '')), 'C')
   ) stored;
 create index products_search_idx on products using gin(search_vector);
-create index products_sku_trgm_idx on products using gin(sku gin_trgm_ops);
+-- gin_trgm_ops lives in whichever schema actually holds pg_trgm
+-- (`extensions` on Supabase, `public` on vanilla Postgres) — resolve it
+-- dynamically so index creation never fails with "operator class
+-- gin_trgm_ops does not exist" (42704).
+do $$
+declare
+  trgm_schema text;
+begin
+  select n.nspname into trgm_schema
+  from pg_extension e
+  join pg_namespace n on n.oid = e.extnamespace
+  where e.extname = 'pg_trgm';
+
+  if trgm_schema is null then
+    raise exception 'pg_trgm is not installed — cannot create products_sku_trgm_idx';
+  end if;
+
+  execute format(
+    'create index if not exists products_sku_trgm_idx on products using gin (sku %I.gin_trgm_ops)',
+    trgm_schema
+  );
+end
+$$;
 
 create table product_images (
   id uuid primary key default gen_random_uuid(),
@@ -321,14 +363,12 @@ create policy "admin write documents" on storage.objects for all to authenticate
 -- Search RPC (websearch syntax + trigram fuzzy fallback)
 -- ---------------------------------------------------------------------------
 
-create extension if not exists pg_trgm;
-
 create or replace function search_products(q text, max_rows int default 20)
 returns table (
   id uuid, slug text, sku text, name text, brand text,
   short_description text, applications text, rank real
 )
-language sql stable as $$
+language sql stable set search_path = 'public', 'extensions' as $$
   select p.id, p.slug, p.sku, p.name, p.brand, p.short_description, p.applications,
          ts_rank(p.search_vector, websearch_to_tsquery('english', q)) as rank
   from products p

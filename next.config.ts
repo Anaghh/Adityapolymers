@@ -24,7 +24,7 @@ const legacyRedirects = [
 ];
 
 const nextConfig: NextConfig = {
-  redirects: legacyRedirects,
+  redirects: async () => legacyRedirects,
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "*.supabase.co" },
