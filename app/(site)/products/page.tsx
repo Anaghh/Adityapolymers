@@ -43,13 +43,13 @@ export default async function ProductsPage() {
 
       <section className="bg-navy-900 text-white">
         <Container className="py-16 sm:py-24">
-          <p className="eyebrow rise-in text-cta">DR BOND ADHESIVES · CATALOGUE</p>
+          <p className="eyebrow rise-in text-cta">DR BOND ADHESIVES CATALOGUE</p>
           <h1 className="rise-in mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
             The Dr Bond range.
           </h1>
           <p className="rise-in mt-5 max-w-2xl text-lg text-navy-100">
             {ordered.length} adhesive families across packaging, wood working and industrial
-            conversion — every grade manufactured in-house at the Pune plants, with specifications
+            conversion. Every grade is manufactured in-house at the Pune plants, with specifications
             published only from verified data sheets.
           </p>
         </Container>
@@ -95,7 +95,7 @@ export default async function ProductsPage() {
           <div className="mt-10 flex flex-col gap-5 rounded-lg border border-line bg-paper p-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-xl text-ink">
               <span className="font-semibold text-navy-900">Need a grade that is not listed?</span>{" "}
-              Customised grades are developed against customer requirement — send us your
+              Customised grades are developed against customer requirement; send us your
               application.
             </p>
             <ButtonLink href="/enquiry" variant="primary" size="lg" className="shrink-0">

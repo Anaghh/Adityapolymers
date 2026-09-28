@@ -102,7 +102,7 @@ export function EnquiryForm({
       if (json.errors) setErrors(json.errors);
       setFormMessage(
         json.code === "not_configured"
-          ? "The enquiry desk is not connected yet — please call or WhatsApp us instead."
+          ? "The enquiry desk is not connected yet. Please call or WhatsApp us instead."
           : res.ok
             ? null
             : "The enquiry could not be sent. Please call or WhatsApp us instead.",
@@ -119,7 +119,7 @@ export function EnquiryForm({
       <div className="rounded-lg border border-line bg-white p-8 sm:p-10" role="status">
         <p className="eyebrow text-navy-600">ENQUIRY RECEIVED</p>
         <h3 className="mt-2 font-display text-2xl font-bold text-navy-950">
-          Thank you — your requirement is with our sales desk.
+          Thank you, your requirement is with our sales desk.
         </h3>
         <p className="mt-3 text-ink-soft">
           We reply to quotations and sample requests on working days. If it is urgent, WhatsApp is
@@ -216,7 +216,7 @@ export function EnquiryForm({
             Product
           </label>
           <select id="productId" name="productId" defaultValue={defaultProduct ?? ""} className={FIELD}>
-            <option value="">Not sure yet — describe below</option>
+            <option value="">Not sure yet, describe below</option>
             {products.map((product) => (
               <option key={product.slug} value={product.slug}>
                 {product.name}
@@ -251,7 +251,7 @@ export function EnquiryForm({
             name="message"
             rows={5}
             required
-            placeholder="Substrate, line speed, application — the more specific, the more accurate the quote."
+            placeholder="Substrate, line speed, application: the more specific, the more accurate the quote."
             className={FIELD}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? "message-error" : undefined}
@@ -268,7 +268,7 @@ export function EnquiryForm({
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-5 text-ink-soft">
-          By submitting, you agree that we may use these details to respond to your enquiry — see
+          By submitting, you agree that we may use these details to respond to your enquiry, see
           our privacy notice.
         </p>
         <button

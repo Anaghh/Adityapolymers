@@ -7,9 +7,9 @@ import { getLocations } from "@/lib/data";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Locations We Serve — Across India & Export Markets",
+  title: "Locations We Serve, Across India & Export Markets",
   description:
-    "Aditya Polymers supplies Dr Bond adhesives across major Indian metros — Pune, Mumbai, Delhi, Kolkata, Bengaluru and more — with exports to the Middle East and Africa.",
+    "Aditya Polymers supplies Dr Bond adhesives across major Indian metros: Pune, Mumbai, Delhi, Kolkata, Bengaluru and more, with exports to the Middle East and Africa.",
   alternates: { canonical: "/locations" },
 };
 
@@ -47,7 +47,7 @@ export default async function LocationsPage() {
       <section className="bg-white">
         <Container className="py-12 sm:py-16">
           <h2 className="font-display text-2xl font-bold tracking-tight text-navy-950">
-            India — {cities.length} cities
+            India, {cities.length} cities
           </h2>
           <div className="mt-6 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {[...byRegion.entries()]
@@ -82,14 +82,14 @@ export default async function LocationsPage() {
               <div key={country.slug} className="rounded-lg border border-line p-6">
                 <h3 className="font-display text-lg font-bold text-navy-900">{country.name}</h3>
                 <p className="mt-1 text-sm text-ink-soft">
-                  Direct exports — documentation and logistics handled desk-side.
+                  Direct exports: documentation and logistics handled desk-side.
                 </p>
               </div>
             ))}
             {regions.map((region) => (
               <div key={region.slug} className="rounded-lg border border-line bg-paper p-6">
                 <h3 className="font-display text-lg font-bold text-navy-900">
-                  {region.name} — enquiries welcome
+                  {region.name}, enquiries welcome
                 </h3>
                 <p className="mt-1 text-sm text-ink-soft">
                   Shipping worldwide from Nhava Sheva; write to us with your port.
@@ -103,7 +103,7 @@ export default async function LocationsPage() {
               Your city not listed?
             </h2>
             <p className="mt-3 max-w-2xl text-ink-soft">
-              Transport desks cover every major route from Pune — tell us your location and volume
+              Transport desks cover every major route from Pune; tell us your location and volume
               and we will quote delivered.
             </p>
             <div className="mt-6">

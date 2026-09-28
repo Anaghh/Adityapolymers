@@ -21,7 +21,7 @@ export default function GlobalError({
           This page hit an error.
         </h1>
         <p className="mt-4 max-w-xl text-ink-soft">
-          Try again — if it keeps failing, the sales desk is reachable on phone or WhatsApp.
+          Try again; if it keeps failing, the sales desk is reachable on phone or WhatsApp.
         </p>
         <button
           type="button"

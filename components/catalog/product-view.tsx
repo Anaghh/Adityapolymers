@@ -15,6 +15,9 @@ import type { Category, Product } from "@/lib/types";
  * /products/{parent}/{child}/{slug} route render through this component; the
  * category segments are validated against the product's own category or one
  * of its ancestors, and unknown combinations 404.
+ *
+ * Copy rules: no em-dashes in user-facing strings; pack lists are
+ * comma-joined, not dot-joined.
  */
 
 function truncate(text: string, max: number): string {
@@ -30,8 +33,8 @@ function splitApplications(text: string): string[] {
 }
 
 function packSizeLine(product: Product): string {
-  if (product.packSizes.length) return product.packSizes.join(" · ");
-  return product.isRetailPack ? "125 g – 50 kg retail range" : "On request";
+  if (product.packSizes.length) return product.packSizes.join(", ");
+  return product.isRetailPack ? "125 g-50 kg retail range" : "On request";
 }
 
 /** Metadata shared by both detail routes; the deep route canonicalizes to the short URL. */
@@ -41,7 +44,7 @@ export async function productMetadata(slug: string): Promise<Metadata> {
   const categories = await getCategories();
   const own = categories.find((c) => c.slug === product.categorySlug);
   return {
-    title: `${product.name} — ${own?.name ?? "Adhesives"}`,
+    title: `${product.name}, ${own?.name ?? "Adhesives"}`,
     description: product.applications,
     alternates: { canonical: `/products/${product.categorySlug}/${product.slug}` },
   };
@@ -149,7 +152,7 @@ export async function ProductPageBody({ slug, segments }: { slug: string; segmen
                   ))}
                 </ul>
               ) : (
-                <p className="mt-3 text-ink-soft">On request — matched to your application.</p>
+                <p className="mt-3 text-ink-soft">On request, matched to your application.</p>
               )}
             </section>
 
@@ -164,7 +167,7 @@ export async function ProductPageBody({ slug, segments }: { slug: string; segmen
             <div className="rounded-lg border border-line bg-paper p-5">
               <h2 className="font-display text-lg font-bold text-navy-950">Get a quotation</h2>
               <p className="mt-1 text-sm text-ink-soft">
-                Quote direct from the manufacturer — send grade and quantity.
+                Quote direct from the manufacturer; send grade and quantity.
               </p>
               <div className="mt-4 space-y-2.5">
                 <ButtonLink href={enquiryHref} variant="primary" className="w-full">
@@ -202,7 +205,7 @@ export async function ProductPageBody({ slug, segments }: { slug: string; segmen
                 </ul>
               ) : (
                 <p className="mt-3 text-sm text-ink-soft">
-                  No other listed grades in this family yet — customised grades are developed
+                  No other listed grades in this family yet; customised grades are developed
                   against customer requirement.
                 </p>
               )}

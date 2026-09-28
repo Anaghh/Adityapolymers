@@ -25,7 +25,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.adityapolymers.
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Aditya Polymers — Industrial Adhesives Manufacturer, Pune, India",
+    default: "Aditya Polymers, Industrial Adhesives Manufacturer, Pune, India",
     template: "%s | Aditya Polymers",
   },
   description:

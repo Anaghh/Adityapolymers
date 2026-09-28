@@ -8,20 +8,20 @@ import { getLabTests } from "@/lib/data";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Quality — ISO 9001:2015 Certified Manufacturing | Aditya Polymers",
+  title: "ISO 9001:2015 Certified Manufacturing",
   description:
-    "Aditya Polymers manufactures Dr Bond adhesives under an ISO 9001:2015 quality management system — raw-material, in-process and batch-release testing in an in-house lab at both Pune plants.",
+    "Aditya Polymers manufactures Dr Bond adhesives under an ISO 9001:2015 quality management system, with raw-material, in-process and batch-release testing in an in-house lab at both Pune plants.",
   alternates: { canonical: "/quality" },
 };
 
 const GATES = [
   {
     stage: "Raw material",
-    body: "Incoming lots are checked against specification before they touch a reactor — solids, viscosity and appearance on every lot, supplier CoA cross-verified.",
+    body: "Incoming lots are checked against specification before they touch a reactor: solids, viscosity and appearance on every lot, supplier CoA cross-verified.",
   },
   {
     stage: "In process",
-    body: "Mixing parameters — temperature, addition order, hold times — are logged on the batch record; in-process samples track viscosity and solids to the target curve.",
+    body: "Mixing parameters (temperature, addition order, hold times) are logged on the batch record; in-process samples track viscosity and solids to the target curve.",
   },
   {
     stage: "Batch release",
@@ -38,7 +38,7 @@ export default function QualityPage() {
         <Container className="py-10 sm:py-14">
           <p className="eyebrow text-cta">QUALITY SYSTEM</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-            ISO 9001:2015 — certified process, tested batches.
+            ISO 9001:2015, certified process, tested batches.
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-navy-100">
             A documented quality management system across both Pune plants, with the full test
@@ -50,16 +50,17 @@ export default function QualityPage() {
 
       <Band tone="white">
         <SectionHeading
-          eyebrow="Quality gates"
           title="Three gates between raw material and your line."
-          intro="Quality is not an inspection at the end — it is a gate at each stage, each with its own records."
+          intro="Quality is not an inspection at the end, it is a gate at each stage, each with its own records."
         />
-        <ol className="mt-10 grid gap-4 lg:grid-cols-3">
+        <ol className="mt-8 divide-y divide-line border-y border-line">
           {GATES.map((gate, index) => (
-            <li key={gate.stage} className="flex h-full flex-col rounded-lg border border-line bg-white p-6">
-              <span className="font-mono text-sm font-medium text-navy-600">0{index + 1}</span>
-              <h3 className="mt-2 font-display text-lg font-bold text-navy-950">{gate.stage}</h3>
-              <p className="mt-2 flex-1 text-sm leading-6 text-ink-soft">{gate.body}</p>
+            <li key={gate.stage} className="flex flex-col gap-2 py-6 sm:flex-row sm:gap-8">
+              <h3 className="font-display text-lg font-bold text-navy-950 sm:w-80 sm:shrink-0">
+                <span className="mr-3 font-mono text-sm font-medium text-navy-600">0{index + 1}</span>
+                {gate.stage}
+              </h3>
+              <p className="flex-1 text-sm leading-6 text-ink-soft">{gate.body}</p>
             </li>
           ))}
         </ol>
@@ -67,9 +68,8 @@ export default function QualityPage() {
 
       <Band tone="paper">
         <SectionHeading
-          eyebrow="Test panel"
           title="What gets tested."
-          intro="The in-house laboratory runs this panel — the same properties your incoming inspection will measure."
+          intro="The in-house laboratory runs this panel, the same properties your incoming inspection will measure."
         />
         <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {labTests.map((test) => (
@@ -81,15 +81,14 @@ export default function QualityPage() {
         </ul>
         <p className="mt-8 max-w-2xl text-sm leading-6 text-ink-soft">
           Published specifications appear on grade pages only as verified against the current
-          technical data sheet — until a value is verified it shows “On request”, never a guess.
+          technical data sheet; until a value is verified it shows “On request”, never a guess.
         </p>
       </Band>
 
       <Band tone="white">
         <SectionHeading
-          eyebrow="Documentation"
           title="Datasheets, safety sheets, certificates."
-          intro="TDS and SDS documents publish through the download centre as they are verified — grade by grade."
+          intro="TDS and SDS documents publish through the download centre as they are verified, grade by grade."
         />
         <div className="mt-8 flex flex-wrap gap-3">
           <ButtonLink href="/downloads" variant="primary" size="lg">

@@ -50,7 +50,7 @@ export function ProductTable({ products }: { products: Product[] }) {
                   {product.specs.solids_pct != null ? `${product.specs.solids_pct}%` : "On request"}
                 </td>
                 <td className="text-ink">
-                  {product.packSizes.length ? product.packSizes.join(" · ") : "On request"}
+                  {product.packSizes.length ? product.packSizes.join(", ") : "On request"}
                 </td>
                 <td>
                   <Link
@@ -67,7 +67,7 @@ export function ProductTable({ products }: { products: Product[] }) {
         </table>
       </div>
       <p className="border-t border-line bg-paper px-4 py-3 text-xs text-ink-soft">
-        “On request” marks values still being verified against current technical data sheets — ask
+        “On request” marks values still being verified against current technical data sheets; ask
         for the TDS for binding figures.
       </p>
     </div>

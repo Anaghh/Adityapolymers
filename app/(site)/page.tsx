@@ -18,10 +18,10 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Aditya Polymers — Industrial Adhesives Manufacturer, Pune, India",
+    absolute: "Aditya Polymers, Industrial Adhesives Manufacturer, Pune, India",
   },
   description:
-    "Dr Bond synthetic, packaging and wood-working adhesives from an ISO 9001:2015 certified Pune manufacturer — 6,000 MTPA across two plants, exports to the Middle East and Africa.",
+    "Dr Bond synthetic, packaging and wood-working adhesives from an ISO 9001:2015 certified Pune manufacturer, 6,000 MTPA across two plants, exports to the Middle East and Africa.",
   alternates: { canonical: "/" },
 };
 
@@ -88,11 +88,11 @@ export default async function HomePage() {
     { label: "Stainless-steel reactors", value: "5", kind: "figure" },
     { label: "Pilot plant", value: "50 kg batch", kind: "figure" },
     { label: "R&D reactor", value: "2 kg glass", kind: "figure" },
-    { label: "In-house lab tests", value: labTests.join(" · "), kind: "text" },
-    { label: "Effluent treatment", value: "Full ETP on site — the sustainability line", kind: "text" },
+    { label: "In-house lab tests", value: labTests.join(", "), kind: "text" },
+    { label: "Effluent treatment", value: "Full ETP on site, the sustainability line", kind: "text" },
     { label: "Operations", value: "ERP-integrated production, QC and dispatch", kind: "text" },
     { label: "Exports", value: "UAE + South Africa; shipping worldwide", kind: "text" },
-    { label: "Retail packs", value: "125 g – 50 kg", kind: "text" },
+    { label: "Retail packs", value: "125 g-50 kg", kind: "text" },
     { label: "Contract manufacturing", value: "MNC contract-packaging vendorship", kind: "text" },
   ];
 
@@ -126,14 +126,14 @@ export default async function HomePage() {
 
       {/* ——— Hero ——— */}
       <section className="bg-navy-900 text-white">
-        <Container className="py-20 sm:py-28">
-          <p className="eyebrow rise-in text-cta">DR BOND INDUSTRIAL ADHESIVES · PUNE, INDIA</p>
+        <Container className="py-14 sm:py-24">
+          <p className="eyebrow rise-in text-cta">DR BOND INDUSTRIAL ADHESIVES, PUNE</p>
           <h1 className="rise-in mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
-            Industrial adhesives for packaging and woodworking — engineered in Pune.
+            Industrial adhesives for packaging and woodworking. Engineered in Pune.
           </h1>
           <p className="rise-in mt-5 max-w-2xl text-lg text-navy-100">
-            Manufacturer, supplier and exporter of the Dr Bond range — ISO 9001:2015 certified,
-            6,000 MTPA across two plants, shipping across India and to the Middle East and Africa.
+            Dr Bond adhesives, made on our own Pune reactors. ISO 9001:2015 certified, 6,000 MTPA,
+            shipping across India and beyond.
           </p>
           <div className="rise-in mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/enquiry" variant="primary" size="lg">
@@ -151,9 +151,8 @@ export default async function HomePage() {
       {/* ——— Product families ——— */}
       <Band tone="paper">
         <SectionHeading
-          eyebrow="Product families"
           title="Seven families. One Dr Bond standard."
-          intro="From textile-tube synthetics to dextrin gums and furniture-grade PVA — every grade is made in-house at the Pune plants."
+          intro="From textile-tube synthetics to dextrin gums and furniture-grade PVA, every grade is made in-house at the Pune plants."
         />
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
@@ -184,9 +183,8 @@ export default async function HomePage() {
       {/* ——— Signature grades ——— */}
       <Band tone="white">
         <SectionHeading
-          eyebrow="Signature grades"
           title="The grades our customers reorder."
-          intro="Four workhorse grades across woodworking and packaging — full data on request or by TDS."
+          intro="Four workhorse grades across woodworking and packaging, with full data on request or by TDS."
         />
         <ul className="mt-10 divide-y divide-line overflow-hidden rounded-lg border border-line bg-white">
           {featured.map((product) => (
@@ -221,13 +219,12 @@ export default async function HomePage() {
       {/* ——— Why Aditya Polymers ——— */}
       <Band tone="paper">
         <SectionHeading
-          eyebrow="Why Aditya Polymers"
           title="Plant facts, not marketing claims."
-          intro="The figures below are audited on site — the same ones our customers check during vendor audits."
+          intro="The figures below are audited on site, the same ones our customers check during vendor audits."
         />
         <div className="mt-10 overflow-hidden rounded-lg border border-line bg-white">
           <div className="bg-navy-900 px-4 py-3 font-display text-sm font-semibold uppercase tracking-wide text-white">
-            Aditya Polymers — capability sheet
+            Aditya Polymers capability sheet
           </div>
           <table className="spec-table w-full border-collapse">
             <tbody>
@@ -244,30 +241,31 @@ export default async function HomePage() {
             </tbody>
           </table>
           <p className="border-t border-line bg-paper px-4 py-3 text-xs text-ink-soft">
-            Audited on site, 2026 — figures reconcile to the 6,000 MTPA combined capacity.
+            Audited on site, 2026; figures reconcile to the 6,000 MTPA combined capacity.
           </p>
         </div>
       </Band>
 
       {/* ——— Trust strip ——— */}
       <Band tone="white">
-        <SectionHeading eyebrow="Trust" title="Certified, connected, documented." />
-        <ul className="mt-10 grid gap-4 sm:grid-cols-3">
+        <SectionHeading title="Certified, connected, documented." />
+        <ul className="mt-8 divide-y divide-line border-y border-line">
           {trustCards.map((card) => {
             const Icon = card.icon;
             return (
               <li key={card.href}>
                 <Link
                   href={card.href}
-                  className="group flex h-full flex-col rounded-lg border border-line bg-white p-6 transition-colors hover:border-navy-300"
+                  className="group flex flex-col gap-2 py-5 transition-colors sm:flex-row sm:items-baseline sm:gap-6"
                 >
-                  <Icon className="size-6 text-navy-700" aria-hidden />
-                  <h3 className="mt-3 font-display text-lg font-bold text-navy-900">{card.label}</h3>
-                  <p className="mt-1.5 flex-1 text-sm leading-6 text-ink-soft">{card.description}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-navy-700">
-                    More
-                    <ArrowRight className="size-4" aria-hidden />
+                  <span className="flex items-center gap-3 sm:w-72 sm:shrink-0">
+                    <Icon className="size-5 text-navy-700" aria-hidden />
+                    <span className="font-display text-lg font-bold text-navy-900 group-hover:text-navy-700">
+                      {card.label}
+                    </span>
                   </span>
+                  <span className="flex-1 text-sm leading-6 text-ink-soft">{card.description}</span>
+                  <ArrowRight className="hidden size-4 shrink-0 text-navy-700 sm:inline" aria-hidden />
                 </Link>
               </li>
             );
@@ -283,7 +281,7 @@ export default async function HomePage() {
               Need a grade specified?
             </h2>
             <p className="mt-3 max-w-xl text-navy-100">
-              Tell us the substrate, line speed and pack size — we will match a grade and quote it.
+              Tell us the substrate, line speed and pack size. We match a grade and quote it.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

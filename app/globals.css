@@ -45,7 +45,9 @@ body {
   color: var(--color-navy-950);
 }
 
-/* Section label set in tracked caps — factory-floor voice. */
+/* Section label set in tracked caps — factory-floor voice.
+   RATIONED: max 1 eyebrow per 3 sections on any page (design-taste rule).
+   Reserve it for the hero / the page's defining section. */
 .eyebrow {
   font-family: var(--font-display);
   font-weight: 600;
@@ -53,6 +55,10 @@ body {
   text-transform: uppercase;
   font-size: 0.75rem;
 }
+
+/* Radius system (documented rule): containers/cards use rounded-lg,
+   controls (inputs, buttons, selects, chips) use rounded-md. Badges and
+   avatars may use rounded-full. No other radii on public pages. */
 
 /* Datasheet-style spec tables: figures align in mono like a real TDS. */
 .spec-table {

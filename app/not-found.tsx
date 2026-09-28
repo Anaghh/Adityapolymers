@@ -11,7 +11,7 @@ export default function NotFound() {
           That page is not here.
         </h1>
         <p className="mt-4 max-w-xl text-lg text-navy-100">
-          The old adityapolymers.com URLs redirect automatically — if you reached this page from a
+          The old adityapolymers.com URLs redirect automatically. If you reached this page from a
           legacy link, write to us and we will route it.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">

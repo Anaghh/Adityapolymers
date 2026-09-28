@@ -143,7 +143,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
                 Customised grades, developed against customer requirement
               </h2>
               <p className="mt-3 max-w-2xl text-ink-soft">
-                No catalogue grades are published for {category.name} yet — this family is made to
+                No catalogue grades are published for {category.name} yet; this family is made to
                 order. Send us your substrate, line speed and pack size and we will match a
                 formulation and quote it.
               </p>

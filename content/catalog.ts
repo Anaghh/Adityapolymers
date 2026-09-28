@@ -23,7 +23,7 @@ export type ProductSeed = {
   name: string;
   brand: string;
   applications: string;
-  /** Values only from client TDS documents — never invented. */
+  /** Values only from client TDS documents - never invented. */
   specs: {
     solids_pct: number | null;
     viscosity: string | null;
@@ -77,7 +77,7 @@ export const CATEGORIES: CategorySeed[] = [
     name: "Lamination Adhesives",
     shortName: "Lamination",
     description:
-      "Temperature-resistant, solvent-free lamination adhesives that stick quickly even to rough surfaces — including high-speed E-fluting lamination machines.",
+      "Temperature-resistant, solvent-free lamination adhesives that stick quickly even to rough surfaces - including high-speed E-fluting lamination machines.",
     sortOrder: 4,
   },
   {
@@ -110,7 +110,7 @@ export const CATEGORIES: CategorySeed[] = [
 ];
 
 export const PRODUCTS: ProductSeed[] = [
-  // ——— Synthetic (5) ———
+  // --- Synthetic (5) ---
   {
     slug: "ap-450",
     categorySlug: "synthetic",
@@ -149,7 +149,7 @@ export const PRODUCTS: ProductSeed[] = [
     categorySlug: "synthetic",
     name: "Dr Bond BP 2500",
     brand: "Dr Bond",
-    applications: "VP/GP paper tubes — high solid, low viscosity",
+    applications: "VP/GP paper tubes - high solid, low viscosity",
     specs: { solids_pct: null, viscosity: null, ph: null, base: "PVA/VAM", water_resistant: null },
     packSizes: [],
     isRetailPack: false,
@@ -167,13 +167,13 @@ export const PRODUCTS: ProductSeed[] = [
     notes: null,
   },
 
-  // ——— Starch based / dextrin (10) ———
+  // --- Starch based / dextrin (10) ---
   {
     slug: "cl-150",
     categorySlug: "starch-based-dextrin",
     name: "Dr Bond CL 150",
     brand: "Dr Bond",
-    applications: "Paper tubes, paper cores, edge guards, fibre drums — cold mixing, no cooking or heating required",
+    applications: "Paper tubes, paper cores, edge guards, fibre drums - cold mixing, no cooking or heating required",
     specs: { solids_pct: null, viscosity: null, ph: null, base: "Starch / dextrin", water_resistant: null },
     packSizes: [],
     isRetailPack: false,
@@ -184,7 +184,7 @@ export const PRODUCTS: ProductSeed[] = [
     categorySlug: "starch-based-dextrin",
     name: "Dr Bond DEXO 3000",
     brand: "Dr Bond",
-    applications: "Paper tubes and paper cores — hot mixing grade (cooking equipment required)",
+    applications: "Paper tubes and paper cores - hot mixing grade (cooking equipment required)",
     specs: { solids_pct: null, viscosity: null, ph: null, base: "Starch / dextrin", water_resistant: null },
     packSizes: [],
     isRetailPack: false,
@@ -195,7 +195,7 @@ export const PRODUCTS: ProductSeed[] = [
     categorySlug: "starch-based-dextrin",
     name: "Dr Bond DEXO 4000",
     brand: "Dr Bond",
-    applications: "Paper tubes and paper cores — hot mixing grade (cooking equipment required)",
+    applications: "Paper tubes and paper cores - hot mixing grade (cooking equipment required)",
     specs: { solids_pct: null, viscosity: null, ph: null, base: "Starch / dextrin", water_resistant: null },
     packSizes: [],
     isRetailPack: false,
@@ -206,7 +206,7 @@ export const PRODUCTS: ProductSeed[] = [
     categorySlug: "starch-based-dextrin",
     name: "Dr Bond DEXO 7000",
     brand: "Dr Bond",
-    applications: "Textile tubes — hot mixing grade (cooking equipment required)",
+    applications: "Textile tubes - hot mixing grade (cooking equipment required)",
     specs: { solids_pct: null, viscosity: null, ph: null, base: "Starch / dextrin", water_resistant: null },
     packSizes: [],
     isRetailPack: false,
@@ -279,7 +279,7 @@ export const PRODUCTS: ProductSeed[] = [
     notes: null,
   },
 
-  // ——— Wood working (4) ———
+  // --- Wood working (4) ---
   {
     slug: "ap-44",
     categorySlug: "wood-working",
@@ -351,7 +351,7 @@ export const INDUSTRIES: IndustrySeed[] = [
     slug: "fibre-drums",
     name: "Fibre Drums (Pharma & Chemical)",
     summary:
-      "Square fibre drum adhesives for the pharma and chemical industries — a capability claimed as a first in India.",
+      "Square fibre drum adhesives for the pharma and chemical industries - a capability claimed as a first in India.",
     productSlugs: ["cl-150"],
   },
   {
@@ -374,7 +374,7 @@ export const INDUSTRIES: IndustrySeed[] = [
   },
 ];
 
-/** Featured Indian metros for /locations — exports handled separately. */
+/** Featured Indian metros for /locations - exports handled separately. */
 export const LOCATIONS: { name: string; scope: "india_city" | "country" | "region"; region: string; isPrimary: boolean }[] = [
   { name: "Pune", scope: "india_city", region: "West India", isPrimary: true },
   { name: "Mumbai", scope: "india_city", region: "West India", isPrimary: true },
@@ -396,7 +396,7 @@ export const LOCATIONS: { name: string; scope: "india_city" | "country" | "regio
 
 /**
  * Audited contact data. Numbers marked verified: false conflict between
- * pages (see audit) and MUST be reconciled with the client before launch —
+ * pages (see audit) and MUST be reconciled with the client before launch -
  * the admin dashboard site-settings screen is the single source of truth.
  */
 export const SITE = {
@@ -404,7 +404,7 @@ export const SITE = {
   brand: "Dr Bond",
   tagline: "Industrial adhesives, engineered in Pune.",
   address:
-    "Off. No. 18, 1st Floor, Highway Towers, Mumbai–Pune Road, Chinchwad, Pune 411019, Maharashtra, India",
+    "Off. No. 18, 1st Floor, Highway Towers, Mumbai-Pune Road, Chinchwad, Pune 411019, Maharashtra, India",
   geo: { lat: 18.645407, lng: 73.790265 },
   phones: [
     { value: "+912066114227", display: "+91 20 6611 4227", label: "Office", verified: true },
@@ -414,16 +414,16 @@ export const SITE = {
     { value: "+919371635319", display: "+91 93716 35319", label: "Customer care", verified: false },
   ],
   whatsappNumber: "+919373387149", // pending client confirmation
-  email: null as string | null, // pending client confirmation — publish one monitored inbox
+  email: null as string | null, // pending client confirmation - publish one monitored inbox
   plants: [
     {
-      name: "Unit 1 — Synthetic Adhesive Division",
+      name: "Unit 1 - Synthetic Adhesive Division",
       area: "Chikhli / PCMC, Pune",
       capacity: "3000 MTPA",
       detail: "5 stainless-steel reactors, DM/RO water plant, full-fledged testing laboratory.",
     },
     {
-      name: "Unit 2 — Starch Based Gums Division",
+      name: "Unit 2 - Starch Based Gums Division",
       area: "Chakan, Pune",
       capacity: "3000 MTPA",
       detail: "2 cookers, blender, ball mill, dedicated quality lab.",

@@ -1,6 +1,6 @@
 import { buttonClass } from "@/components/ui/button";
 
-/** Floating WhatsApp CTA — one-tap handoff with prefilled context. */
+/** Floating WhatsApp CTA: one-tap handoff with prefilled context. */
 export function WhatsAppFloat({ href }: { href: string }) {
   return (
     <a

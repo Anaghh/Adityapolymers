@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { Menu, Phone, X } from "lucide-react";
 import { clsx } from "clsx";
 import { buttonClass } from "@/components/ui/button";
-import type { Category } from "@/lib/types";
 
 /**
  * Global header + conversion bar: verified phone click-to-call, amber
@@ -37,7 +36,7 @@ export function SiteHeader({
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="flex items-baseline gap-2" aria-label="Aditya Polymers — home">
+        <Link href="/" className="flex items-baseline gap-2" aria-label="Aditya Polymers, home">
           <span className="font-display text-xl font-extrabold tracking-tight text-navy-900">
             ADITYA POLYMERS
           </span>

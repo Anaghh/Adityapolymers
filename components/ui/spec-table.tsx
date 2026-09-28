@@ -28,7 +28,7 @@ export function SpecTable({ product }: { product: Product }) {
     { label: "Applications", value: product.applications || "On request", kind: "text" },
     {
       label: "Pack sizes",
-      value: product.packSizes.length ? product.packSizes.join(" · ") : "125 g – 50 kg range",
+      value: product.packSizes.length ? product.packSizes.join(", ") : "125 g-50 kg range",
       kind: "text",
     },
   ];
@@ -39,7 +39,7 @@ export function SpecTable({ product }: { product: Product }) {
         <thead>
           <tr>
             <th scope="col" colSpan={2} className="!bg-navy-900 !text-white">
-              {product.sku} — Technical specification
+              {product.sku}: Technical specification
             </th>
           </tr>
         </thead>

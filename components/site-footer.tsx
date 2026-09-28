@@ -71,7 +71,7 @@ export function SiteFooter({
       <div className="border-t border-navy-800">
         <Container className="flex flex-col gap-2 py-5 text-xs text-navy-300 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Aditya Polymers, Chinchwad, Pune. All rights reserved.</p>
-          <p>ISO 9001:2015 certified — certificate details on the <Link href="/quality" className="underline hover:text-white">quality page</Link>.</p>
+          <p>ISO 9001:2015 certified, certificate details on the <Link href="/quality" className="underline hover:text-white">quality page</Link>.</p>
         </Container>
       </div>
     </footer>

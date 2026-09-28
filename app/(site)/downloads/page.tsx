@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { FileDown } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { Band, SectionHeading } from "@/components/ui/section-heading";
+import { Band } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { getDownloads } from "@/lib/downloads";
 import { getSiteSettings } from "@/lib/data";
@@ -9,7 +9,7 @@ import { getSiteSettings } from "@/lib/data";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "TDS & SDS Downloads — Dr Bond Adhesives",
+  title: "TDS & SDS Downloads",
   description:
     "Technical data sheets and safety data sheets for Dr Bond industrial adhesives, grade by grade, from the Aditya Polymers download centre.",
   alternates: { canonical: "/downloads" },
@@ -49,7 +49,7 @@ export default async function DownloadsPage() {
             </h2>
             <p className="mt-3 max-w-2xl text-ink-soft">
               Data sheets publish here only after verification against the current client
-              documents — nothing goes up unverified. Ask the sales desk for any grade&apos;s TDS
+              documents, nothing goes up unverified. Ask the sales desk for any grade&apos;s TDS
               or SDS in the meantime; it comes back the same working day.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -76,7 +76,7 @@ export default async function DownloadsPage() {
             TDS &amp; SDS downloads
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-navy-100">
-            Verified documents, grade by grade — no signup wall.
+            Verified documents, grade by grade, no signup wall.
           </p>
         </Container>
       </section>

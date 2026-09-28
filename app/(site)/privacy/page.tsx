@@ -5,7 +5,7 @@ import { Band } from "@/components/ui/section-heading";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Privacy Notice — Aditya Polymers",
+  title: "Privacy Notice",
   description:
     "How Aditya Polymers collects, uses and protects personal data submitted through this website, under India's DPDP Act, 2023.",
   alternates: { canonical: "/privacy" },
@@ -16,7 +16,7 @@ const SECTIONS: { heading: string; body: string[] }[] = [
     heading: "What we collect",
     body: [
       "Enquiry form: your name, email, phone and, optionally, company, country, product interest, quantity note and message. We also record the page you sent the form from.",
-      "Downloads: when you download a technical or safety document, we record which document was fetched along with a salted, hashed form of your IP address — not the IP itself.",
+      "Downloads: when you download a technical or safety document, we record which document was fetched along with a salted, hashed form of your IP address, not the IP itself.",
     ],
   },
   {
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
             Privacy notice
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-navy-100">
-            Last updated 26 September 2026 — how this website handles your personal data under the
+            Last updated 26 September 2026: how this website handles your personal data under the
             DPDP Act, 2023.
           </p>
         </Container>

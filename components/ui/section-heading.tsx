@@ -3,7 +3,7 @@ import { Container } from "./container";
 
 /**
  * Section label in tracked caps + real H2. Every content section gets
- * exactly one heading — the old site's keyword-stuffed alt-text pattern
+ * exactly one heading; the old site's keyword-stuffed alt-text pattern
  * is dead by design.
  */
 export function SectionHeading({

@@ -6,9 +6,9 @@ import { getSiteSettings } from "@/lib/data";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Contact — Aditya Polymers, Chinchwad, Pune",
+  title: "Contact and Office Address, Chinchwad, Pune",
   description:
-    "Reach Aditya Polymers (Dr Bond adhesives) in Chinchwad, Pune — phone, WhatsApp and office address, plus the quotation form.",
+    "Reach Aditya Polymers (Dr Bond adhesives) in Chinchwad, Pune: phone, WhatsApp and office address, plus the quotation form.",
   alternates: { canonical: "/contact" },
 };
 
@@ -27,7 +27,7 @@ export default async function ContactPage() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: "Aditya Polymers",
-    description: "Manufacturer of Dr Bond industrial adhesives — synthetic, packaging and wood-working.",
+    description: "Manufacturer of Dr Bond industrial adhesives: synthetic, packaging and wood-working.",
     address: { "@type": "PostalAddress", streetAddress: settings.address, addressCountry: "IN" },
     geo: { "@type": "GeoCoordinates", latitude: settings.geo.lat, longitude: settings.geo.lng },
     telephone: verifiedPhones.map((phone) => phone.value),
@@ -54,7 +54,7 @@ export default async function ContactPage() {
             Talk to the sales desk
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-navy-100">
-            Chinchwad, Pune — office hours 9:30 to 18:00 IST, Monday to Saturday.
+            Chinchwad, Pune. Office hours 9:30 to 18:00 IST, Monday to Saturday.
           </p>
         </Container>
       </section>
@@ -124,7 +124,7 @@ export default async function ContactPage() {
               </p>
             ) : (
               <p className="mt-8 text-sm text-ink-soft">
-                Email desk publishes after client sign-off — please use phone or WhatsApp meanwhile.
+                Email desk publishes after client sign-off. Please use phone or WhatsApp meanwhile.
               </p>
             )}
           </div>
@@ -132,7 +132,7 @@ export default async function ContactPage() {
           <div className="rounded-lg border border-line bg-paper p-6 sm:p-8 lg:self-start">
             <h2 className="font-display text-xl font-bold text-navy-950">Need a quotation?</h2>
             <p className="mt-3 text-ink-soft">
-              The quotation form captures substrate, line speed and pack size in one pass — quotes
+              The quotation form captures substrate, line speed and pack size in one pass, so quotes
               come back faster than over the phone.
             </p>
             <div className="mt-6">

@@ -6,9 +6,9 @@ import { getProducts, getSiteSettings } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Get a Quote — Dr Bond Industrial Adhesives",
+  title: "Get a Quote, Dr Bond Industrial Adhesives",
   description:
-    "Request a quotation, sample or dealership for Dr Bond industrial adhesives — synthetic, packaging and wood-working grades from Aditya Polymers, Pune.",
+    "Request a quotation, sample or dealership for Dr Bond industrial adhesives: synthetic, packaging and wood-working grades from Aditya Polymers, Pune.",
   alternates: { canonical: "/enquiry" },
 };
 
@@ -24,7 +24,7 @@ export default async function EnquiryPage({
   ]);
 
   const options = products
-    .map((product) => ({ slug: product.slug, name: `${product.name} — ${product.applications}` }))
+    .map((product) => ({ slug: product.slug, name: `${product.name}: ${product.applications}` }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   // Catalog pages link /enquiry?product=AP-44 (the SKU); options carry slugs.
@@ -53,7 +53,7 @@ export default async function EnquiryPage({
             Get a quote
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-navy-100">
-            Tell us the substrate, line speed and pack size — the sales desk matches a Dr Bond
+            Tell us the substrate, line speed and pack size. The sales desk matches a Dr Bond
             grade and quotes it, typically within one working day.
           </p>
         </Container>

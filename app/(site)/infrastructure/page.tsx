@@ -8,9 +8,9 @@ import { getLabTests, getPlants } from "@/lib/data";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Infrastructure — Two Pune Plants, 6,000 MTPA | Aditya Polymers",
+  title: "Two Pune Plants, 6,000 MTPA",
   description:
-    "Five stainless-steel reactors, a 50 kg pilot plant, dedicated starch-gum cookers and a full testing laboratory — inside the two Aditya Polymers plants at Chikhli/PCMC and Chakan, Pune.",
+    "Five stainless-steel reactors, a 50 kg pilot plant, dedicated starch-gum cookers and a full testing laboratory inside the two Aditya Polymers plants at Chikhli/PCMC and Chakan, Pune.",
   alternates: { canonical: "/infrastructure" },
 };
 
@@ -36,7 +36,7 @@ export default async function InfrastructurePage() {
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-navy-100">
             The synthetic and starch-gum divisions run on separate equipment at Chikhli/PCMC and
-            Chakan, Pune — 6,000 MTPA combined, with a full-fledged laboratory behind every release.
+            Chakan, Pune, 6,000 MTPA combined, with a full-fledged laboratory behind every release.
           </p>
         </Container>
       </section>
@@ -45,9 +45,8 @@ export default async function InfrastructurePage() {
 
       <Band tone="white">
         <SectionHeading
-          eyebrow="Manufacturing divisions"
           title="Purpose-built lines, not shared ones."
-          intro="Synthetic adhesives and starch-based gums never share a reactor — the divisions run on dedicated equipment, each with its own quality lab."
+          intro="Synthetic adhesives and starch-based gums never share a reactor; the divisions run on dedicated equipment, each with its own quality lab."
         />
         <ul className="mt-10 grid gap-4 lg:grid-cols-2">
           {plants.map((plant) => (
@@ -67,9 +66,8 @@ export default async function InfrastructurePage() {
 
       <Band tone="paper">
         <SectionHeading
-          eyebrow="Equipment"
           title="The capability sheet."
-          intro="The figures our customers check during vendor audits — audited on site."
+          intro="The figures our customers check during vendor audits, audited on site."
         />
         <div className="mt-10 overflow-hidden rounded-lg border border-line bg-white">
           <div className="bg-navy-900 px-4 py-3 font-display text-sm font-semibold uppercase tracking-wide text-white">
@@ -92,9 +90,8 @@ export default async function InfrastructurePage() {
 
       <Band tone="white">
         <SectionHeading
-          eyebrow="Testing laboratory"
           title="Every batch is tested before release."
-          intro="The in-house lab runs the full test panel on raw materials, in-process material and finished batches — the same tests your incoming-inspection will run."
+          intro="The in-house lab runs the full test panel on raw materials, in-process material and finished batches, the same tests your incoming-inspection will run."
         />
         <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {labTests.map((test) => (
