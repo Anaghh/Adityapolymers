@@ -1,23 +1,34 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Sans, Archivo, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const plexSans = IBM_Plex_Sans({
+/* Self-hosted fonts (no runtime Google dependency, no build-time fetch):
+   IBM Plex Sans for body, Archivo Variable for display, IBM Plex Mono for
+   figures — the datasheet voice. */
+const plexSans = localFont({
+  src: [
+    { path: "./fonts/ibm-plex-sans-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/ibm-plex-sans-latin-500-normal.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/ibm-plex-sans-latin-600-normal.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/ibm-plex-sans-latin-700-normal.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-plex-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
-const archivo = Archivo({
+const archivo = localFont({
+  src: [{ path: "./fonts/archivo-variable-latin.woff2", weight: "100 900", style: "normal" }],
   variable: "--font-archivo",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
+const plexMono = localFont({
+  src: [
+    { path: "./fonts/ibm-plex-mono-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/ibm-plex-mono-latin-500-normal.woff2", weight: "500", style: "normal" },
+  ],
   variable: "--font-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  display: "swap",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.adityapolymers.com";

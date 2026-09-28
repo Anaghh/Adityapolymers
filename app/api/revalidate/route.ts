@@ -17,6 +17,7 @@ export const dynamic = "force-dynamic";
 const TABLE_TAGS: Record<string, string[]> = {
   products: ["products"],
   categories: ["categories"],
+  product_images: ["product-images", "products"],
   industries: ["industries"],
   locations_served: ["locations"],
   site_settings: ["site-settings"],

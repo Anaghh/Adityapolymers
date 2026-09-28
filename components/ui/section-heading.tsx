@@ -28,7 +28,7 @@ export function SectionHeading({
       ) : null}
       <h2
         className={clsx(
-          "font-display text-3xl font-bold tracking-tight sm:text-4xl",
+          "font-display text-3xl font-extrabold uppercase tracking-tight sm:text-4xl",
           tone === "dark" ? "text-white" : "text-navy-950",
         )}
       >
@@ -49,20 +49,22 @@ export function SectionHeading({
   );
 }
 
-/** Full-width band wrapper with padding + optional dark/paper tone. */
+/** Full-width band wrapper with padding + optional tone. "concrete" is the
+    light factory plate (blueprint grid optional via className). */
 export function Band({
   tone = "white",
   children,
   className,
 }: {
-  tone?: "white" | "paper" | "navy";
+  tone?: "white" | "paper" | "concrete" | "navy";
   children: React.ReactNode;
   className?: string;
 }) {
   const tones = {
     white: "bg-white",
     paper: "bg-paper",
-    navy: "bg-navy-900 text-navy-100",
+    concrete: "bg-concrete",
+    navy: "bg-navy-950 text-navy-100",
   } as const;
   return (
     <section className={clsx(tones[tone], "py-16 sm:py-20", className)}>

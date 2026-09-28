@@ -5,6 +5,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Band, SectionHeading } from "@/components/ui/section-heading";
 import { FiguresBand } from "@/components/figures-band";
+import { BrandMark } from "@/components/brand/brand-mark";
 import {
   getCategories,
   getLabTests,
@@ -25,12 +26,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-/**
- * Secondary CTA styling for dark bands — the shared outline variant is tuned
- * for light bands (navy text) and would disappear on navy.
- */
-const outlineOnDark =
-  "inline-flex items-center justify-center gap-2 rounded-md border border-white/40 px-6 py-3.5 font-display text-base font-semibold tracking-wide text-white transition-colors hover:border-white/70 hover:bg-white/10";
+/** Secondary CTA on the light hero: stamped outline plate. */
+const outlineOnLight =
+  "inline-flex items-center justify-center gap-2 rounded-md border-2 border-navy-950 px-6 py-3.5 font-display text-base font-bold uppercase tracking-wide text-navy-950 shadow-stamp-sm press transition-all hover:bg-navy-50";
 
 function truncate(text: string, max: number): string {
   return text.length <= max ? text : `${text.slice(0, Math.max(0, max - 1)).trimEnd()}…`;
@@ -125,23 +123,34 @@ export default async function HomePage() {
       />
 
       {/* ——— Hero ——— */}
-      <section className="bg-navy-900 text-white">
-        <Container className="py-14 sm:py-24">
-          <p className="eyebrow rise-in text-cta">DR BOND INDUSTRIAL ADHESIVES, PUNE</p>
-          <h1 className="rise-in mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
-            Industrial adhesives for packaging and woodworking. Engineered in Pune.
-          </h1>
-          <p className="rise-in mt-5 max-w-2xl text-lg text-navy-100">
-            Dr Bond adhesives, made on our own Pune reactors. ISO 9001:2015 certified, 6,000 MTPA,
-            shipping across India and beyond.
-          </p>
-          <div className="rise-in mt-8 flex flex-wrap gap-3">
-            <ButtonLink href="/enquiry" variant="primary" size="lg">
-              Get a Quote
-            </ButtonLink>
-            <Link href="/products" className={outlineOnDark}>
-              Explore products
-            </Link>
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
+        <Container className="grid gap-10 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div>
+            <p className="eyebrow rise-in text-ink-soft">DR BOND INDUSTRIAL ADHESIVES, PUNE</p>
+            <h1 className="rise-in mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-navy-950 sm:text-5xl">
+              Industrial adhesives for packaging and woodworking.{" "}
+              <span className="bg-cta px-1.5">Engineered in Pune.</span>
+            </h1>
+            <p className="rise-in mt-5 max-w-2xl text-lg text-ink-soft">
+              Dr Bond adhesives, made on our own Pune reactors. ISO 9001:2015 certified, 6,000
+              MTPA, shipping across India and beyond.
+            </p>
+            <div className="rise-in mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="/enquiry" variant="primary" size="lg">
+                Get a Quote
+              </ButtonLink>
+              <Link href="/products" className={outlineOnLight}>
+                Explore products
+              </Link>
+            </div>
+          </div>
+          <div className="rise-in hidden lg:block">
+            <div className="rounded-lg border-2 border-navy-950 bg-paper p-6 shadow-stamp">
+              <BrandMark className="size-28" />
+              <p className="mt-3 max-w-[11rem] font-mono text-[11px] uppercase leading-4 tracking-wide text-ink-soft">
+                Safety-goggled quality, bonded in Pune since 2000
+              </p>
+            </div>
           </div>
         </Container>
       </section>
@@ -223,7 +232,7 @@ export default async function HomePage() {
           intro="The figures below are audited on site, the same ones our customers check during vendor audits."
         />
         <div className="mt-10 overflow-hidden rounded-lg border border-line bg-white">
-          <div className="bg-navy-900 px-4 py-3 font-display text-sm font-semibold uppercase tracking-wide text-white">
+          <div className="bg-navy-950 px-4 py-3 font-display text-sm font-bold uppercase tracking-wide text-paper">
             Aditya Polymers capability sheet
           </div>
           <table className="spec-table w-full border-collapse">
@@ -274,10 +283,11 @@ export default async function HomePage() {
       </Band>
 
       {/* ——— Closing CTA ——— */}
-      <section className="bg-navy-900">
+      <section className="hazard-stripe" aria-hidden />
+      <section className="bg-navy-950">
         <Container className="flex flex-col gap-8 py-16 sm:py-20 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="font-display text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl">
               Need a grade specified?
             </h2>
             <p className="mt-3 max-w-xl text-navy-100">

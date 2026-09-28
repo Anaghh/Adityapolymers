@@ -63,14 +63,14 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
 
   return (
     <>
-      <section className="bg-navy-900 text-white">
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
         <Container className="py-10 sm:py-14">
-          <Breadcrumbs items={crumbs} tone="dark" />
+          <Breadcrumbs items={crumbs} tone="light" />
           <p className="eyebrow mt-8 text-cta">DR BOND PRODUCT FAMILY</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
             {category.name}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-navy-100">{category.description}</p>
+          <p className="mt-4 max-w-2xl text-lg text-ink-soft">{category.description}</p>
         </Container>
       </section>
 

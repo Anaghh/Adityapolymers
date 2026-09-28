@@ -41,13 +41,13 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="bg-navy-900 text-white">
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
         <Container className="py-14 sm:py-20">
-          <p className="eyebrow text-cta">ABOUT ADITYA POLYMERS</p>
+          <p className="eyebrow text-ink-soft">ABOUT ADITYA POLYMERS</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
             25 years of making adhesives, not marketing them.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg text-navy-100">
+          <p className="mt-5 max-w-2xl text-lg text-ink-soft">
             From a Pune base, Aditya Polymers manufactures the Dr Bond range of synthetic, packaging
             and wood-working adhesives: 6,000 MTPA across two plants, shipping across India and to
             the Middle East and Africa.

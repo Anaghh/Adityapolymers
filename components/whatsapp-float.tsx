@@ -7,7 +7,7 @@ export function WhatsAppFloat({ href }: { href: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${buttonClass("whatsapp", "lg")} fixed right-4 bottom-4 z-50 shadow-lg shadow-navy-950/20`}
+      className={`${buttonClass("whatsapp", "lg")} fixed right-4 bottom-4 z-50`}
       aria-label="Chat with us on WhatsApp"
     >
       <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden>

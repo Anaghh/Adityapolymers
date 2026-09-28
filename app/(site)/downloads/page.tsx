@@ -34,9 +34,9 @@ export default async function DownloadsPage() {
   if (downloads.length === 0) {
     return (
       <>
-        <section className="bg-navy-900 text-white">
+        <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
           <Container className="py-10 sm:py-14">
-            <p className="eyebrow text-cta">DOWNLOAD CENTRE</p>
+            <p className="eyebrow text-ink-soft">DOWNLOAD CENTRE</p>
             <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
               TDS &amp; SDS downloads
             </h1>
@@ -69,13 +69,13 @@ export default async function DownloadsPage() {
 
   return (
     <>
-      <section className="bg-navy-900 text-white">
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
         <Container className="py-10 sm:py-14">
-          <p className="eyebrow text-cta">DOWNLOAD CENTRE</p>
+          <p className="eyebrow text-ink-soft">DOWNLOAD CENTRE</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
             TDS &amp; SDS downloads
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-navy-100">
+          <p className="mt-4 max-w-2xl text-lg text-ink-soft">
             Verified documents, grade by grade, no signup wall.
           </p>
         </Container>

@@ -49,13 +49,13 @@ const SECTIONS: { heading: string; body: string[] }[] = [
 export default function PrivacyPage() {
   return (
     <>
-      <section className="bg-navy-900 text-white">
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
         <Container className="py-10 sm:py-14">
-          <p className="eyebrow text-cta">PRIVACY</p>
+          <p className="eyebrow text-ink-soft">PRIVACY</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
             Privacy notice
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-navy-100">
+          <p className="mt-4 max-w-2xl text-lg text-ink-soft">
             Last updated 26 September 2026: how this website handles your personal data under the
             DPDP Act, 2023.
           </p>

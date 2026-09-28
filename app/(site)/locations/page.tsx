@@ -31,13 +31,13 @@ export default async function LocationsPage() {
 
   return (
     <>
-      <section className="bg-navy-900 text-white">
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
         <Container className="py-10 sm:py-14">
-          <p className="eyebrow text-cta">SUPPLY NETWORK</p>
+          <p className="eyebrow text-ink-soft">SUPPLY NETWORK</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
             Direct supply across India. Exports on schedule.
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-navy-100">
+          <p className="mt-4 max-w-2xl text-lg text-ink-soft">
             Dr Bond adhesives ship from the two Pune plants to manufacturing hubs across the
             country, and abroad to the Middle East and Africa.
           </p>

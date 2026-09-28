@@ -119,14 +119,14 @@ export async function ProductPageBody({ slug, segments }: { slug: string; segmen
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
 
-      <section className="bg-navy-900 text-white">
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
         <Container className="py-10 sm:py-14">
-          <Breadcrumbs items={crumbs} tone="dark" />
+          <Breadcrumbs items={crumbs} tone="light" />
           <p className="eyebrow mt-8 text-cta">{own.shortName.toUpperCase()}</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
             {product.name}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-navy-100">{product.applications}</p>
+          <p className="mt-4 max-w-2xl text-lg text-ink-soft">{product.applications}</p>
         </Container>
       </section>
 

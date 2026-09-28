@@ -41,13 +41,13 @@ export default async function ProductsPage() {
     <>
       <HashShim />
 
-      <section className="bg-navy-900 text-white">
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
         <Container className="py-16 sm:py-24">
           <p className="eyebrow rise-in text-cta">DR BOND ADHESIVES CATALOGUE</p>
           <h1 className="rise-in mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
             The Dr Bond range.
           </h1>
-          <p className="rise-in mt-5 max-w-2xl text-lg text-navy-100">
+          <p className="rise-in mt-5 max-w-2xl text-lg text-ink-soft">
             {ordered.length} adhesive families across packaging, wood working and industrial
             conversion. Every grade is manufactured in-house at the Pune plants, with specifications
             published only from verified data sheets.

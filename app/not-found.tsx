@@ -4,13 +4,13 @@ import { ButtonLink } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <section className="bg-navy-900 text-white">
+    <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
       <Container className="py-20 sm:py-28">
-        <p className="eyebrow text-cta">404</p>
+        <p className="eyebrow text-ink-soft">404</p>
         <h1 className="mt-2 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
           That page is not here.
         </h1>
-        <p className="mt-4 max-w-xl text-lg text-navy-100">
+        <p className="mt-4 max-w-xl text-lg text-ink-soft">
           The old adityapolymers.com URLs redirect automatically. If you reached this page from a
           legacy link, write to us and we will route it.
         </p>

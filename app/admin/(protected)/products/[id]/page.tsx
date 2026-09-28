@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { clsx } from "clsx";
+import { Trash2, Star } from "lucide-react";
 import { getServiceRoleClient } from "@/lib/supabase";
 import { getAdminUser } from "@/lib/supabase/ssr";
-import { saveProductFromForm } from "@/lib/admin";
+import {
+  deleteProductImage,
+  saveProductFromForm,
+  saveProductImageFromForm,
+  setProductImagePrimary,
+} from "@/lib/admin";
 import { getCategories } from "@/lib/data";
 import type { Specs } from "@/lib/types";
 import {
@@ -22,6 +29,14 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Admin product editor",
   robots: { index: false, follow: false },
+};
+
+type ProductImageRow = {
+  id: string;
+  storage_path: string;
+  alt: string;
+  sort_order: number;
+  is_primary: boolean;
 };
 
 type ProductEditRow = {
@@ -51,7 +66,7 @@ export default async function AdminProductEditPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; saved?: string }>;
 }) {
   const { isAdmin } = await getAdminUser();
   const db = getServiceRoleClient();
@@ -71,6 +86,22 @@ export default async function AdminProductEditPage({
 
   const specs = product?.specs ?? {};
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const images: ProductImageRow[] = product
+    ? ((
+        await db
+          .from("product_images")
+          .select("id, storage_path, alt, sort_order, is_primary")
+          .eq("product_id", product.id)
+          .order("is_primary", { ascending: false })
+          .order("sort_order")
+      ).data ?? [])
+    : [];
+  const imageUrl = (path: string) =>
+    supabaseUrl
+      ? `${supabaseUrl}/storage/v1/object/public/product-images/${path}`
+      : "";
+
   return (
     <div>
       <p className="mb-2">
@@ -84,7 +115,103 @@ export default async function AdminProductEditPage({
         intro={isNew ? "Specs left blank render “On request” on the public page until TDS verifies them." : `SKU ${product?.sku ?? ""}`}
       />
 
-      <AdminBanner error={query.error} />
+      <AdminBanner error={query.error} saved={query.saved === "1"} />
+
+      {product ? (
+        <section aria-label="Product photos" className={clsx(adminCard, "mb-8 p-6")}>
+          <h2 className="eyebrow text-ink-soft">Photos</h2>
+          <p className="mt-2 max-w-prose text-sm text-ink-soft">
+            Shown on the grade page gallery. The first upload becomes the primary shot; use
+            &ldquo;Make primary&rdquo; to change the hero image. jpg/png/webp/avif up to 8 MB,
+            ideally 1600&times;900 or larger.
+          </p>
+
+          {images.length > 0 ? (
+            <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+              {images.map((image) => (
+                <li
+                  key={image.id}
+                  className={clsx(
+                    "rounded-lg border p-3",
+                    image.is_primary ? "border-navy-900" : "border-line",
+                  )}
+                >
+                  <div className="relative aspect-video overflow-hidden rounded-md bg-paper">
+                    <Image
+                      src={imageUrl(image.storage_path)}
+                      alt={image.alt || "Product photo"}
+                      fill
+                      sizes="(min-width: 640px) 320px, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <p className="mt-2 truncate text-sm text-ink" title={image.alt}>
+                    {image.is_primary ? (
+                      <span className="mr-1.5 inline-flex items-center gap-1 font-display text-xs font-semibold uppercase tracking-wide text-navy-900">
+                        <Star className="size-3.5" aria-hidden /> Primary
+                      </span>
+                    ) : null}
+                    {image.alt}
+                  </p>
+                  <div className="mt-2 flex items-center gap-3">
+                    {!image.is_primary ? (
+                      <form action={setProductImagePrimary}>
+                        <input type="hidden" name="image_id" value={image.id} />
+                        <input type="hidden" name="product_id" value={product.id} />
+                        <button
+                          type="submit"
+                          className="font-display text-xs font-semibold text-navy-700 underline-offset-4 hover:underline"
+                        >
+                          Make primary
+                        </button>
+                      </form>
+                    ) : null}
+                    <form action={deleteProductImage}>
+                      <input type="hidden" name="image_id" value={image.id} />
+                      <input type="hidden" name="product_id" value={product.id} />
+                      <button
+                        type="submit"
+                        className="inline-flex items-center gap-1 font-display text-xs font-semibold text-danger underline-offset-4 hover:underline"
+                      >
+                        <Trash2 className="size-3.5" aria-hidden /> Delete
+                      </button>
+                    </form>
+                  </div>
+ </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 rounded-md border border-dashed border-line bg-paper px-4 py-6 text-center text-sm text-ink-soft">
+              No photos yet. The public grade page shows no gallery until the first upload.
+            </p>
+          )}
+
+          <form action={saveProductImageFromForm} className="mt-5 space-y-3 border-t border-line pt-4">
+            <input type="hidden" name="product_id" value={product.id} />
+            <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+              <Field label="Image file" htmlFor="photo-file">
+                <input
+                  id="photo-file"
+                  name="file"
+                  type="file"
+                  required
+                  accept="image/jpeg,image/png,image/webp,image/avif"
+                  className={clsx(adminInput, "py-1.5")}
+                />
+              </Field>
+              <Field label="Alt text" htmlFor="photo-alt" hint="Describe what the photo shows">
+                <input id="photo-alt" name="alt" maxLength={200} className={adminInput} />
+              </Field>
+            </div>
+            <button
+              type="submit"
+              className="rounded-md bg-navy-900 px-4 py-2 font-display text-sm font-semibold tracking-wide text-white transition-colors hover:bg-navy-800"
+            >
+              Upload photo
+            </button>
+          </form>
+        </section>
+      ) : null}
 
       <form action={saveProductFromForm} className={clsx(adminCard, "space-y-6 p-6")}>
         {!isNew ? <input type="hidden" name="id" value={product?.id} /> : null}

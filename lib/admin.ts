@@ -436,6 +436,162 @@ export async function setTestimonialApproval(fd: FormData): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
+// Product images (Storage upload + row)
+// ---------------------------------------------------------------------------
+
+const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"] as const;
+const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+
+function imageExtensionOf(name: string): string | null {
+  const match = /\.([a-z0-9]+)$/i.exec(name);
+  const ext = match?.[1]?.toLowerCase() ?? "";
+  return (IMAGE_EXTENSIONS as readonly string[]).includes(ext) ? ext : null;
+}
+
+/**
+ * Uploads a product photo to the public product-images bucket and registers
+ * it. The first image of a product becomes primary automatically; that row
+ * starts at sort_order 0 so the client gallery (ordered primary-first) shows
+ * the right hero shot without a manual reorder.
+ */
+export async function uploadProductImage(fd: FormData): Promise<AdminActionResult> {
+  const candidate = {
+    file: fd.get("file") instanceof File ? (fd.get("file") as File) : null,
+    productId: fdStr(fd, "product_id"),
+    alt: fdStr(fd, "alt"),
+  };
+
+  const parsed = z
+    .object({
+      file: z.instanceof(File).refine((f) => f.size > 0, "file required"),
+      productId: z.string().uuid(),
+      alt: z.string().max(200),
+    })
+    .safeParse(candidate);
+  const input = parsed.success ? parsed.data : null;
+  if (!input || !input.file) {
+    return { ok: false, error: "Pick an image (jpg, png, webp or avif) and add alt text." };
+  }
+  const ext = imageExtensionOf(input.file.name);
+  if (!ext) return { ok: false, error: "Only jpg, png, webp or avif images are supported." };
+  if (input.file.size > MAX_IMAGE_BYTES) {
+    return { ok: false, error: "Images must be 8 MB or smaller." };
+  }
+
+  const file = input.file;
+  const path = `${input.productId}/${Date.now()}.${ext}`;
+
+  const result = await guard(async (db) => {
+    const { error: upErr } = await db.storage.from("product-images").upload(path, file, {
+      cacheControl: "31536000",
+      upsert: false,
+      contentType: file.type || `image/${ext}`,
+    });
+    if (upErr) throw upErr;
+
+    const { count } = await db
+      .from("product_images")
+      .select("id", { count: "exact", head: true })
+      .eq("product_id", input.productId);
+    const isFirst = (count ?? 0) === 0;
+
+    await db
+      .from("product_images")
+      .insert({
+        product_id: input.productId,
+        storage_path: path,
+        alt: input.alt,
+        is_primary: isFirst,
+        sort_order: isFirst ? 0 : count ?? 0,
+      })
+      .throwOnError();
+  });
+
+  if (result.ok) {
+    updateTag("product-images");
+    updateTag("catalog");
+    revalidatePath(`/admin/products/${input.productId}`);
+  }
+  return result;
+}
+
+export async function saveProductImageFromForm(fd: FormData): Promise<void> {
+  const productId = fdStr(fd, "product_id");
+  const result = await uploadProductImage(fd);
+  if (result.ok) {
+    redirect(`/admin/products/${productId}?saved=1`);
+  }
+  redirect(`/admin/products/${productId}?error=${encodeURIComponent(result.error ?? GENERIC_ERROR)}`);
+}
+
+/** Promotes an image to primary and demotes the previous primary. */
+export async function setProductImagePrimary(fd: FormData): Promise<void> {
+  const imageId = fdStr(fd, "image_id");
+  const productId = fdStr(fd, "product_id");
+  const parsed = z
+    .object({ imageId: z.string().uuid(), productId: z.string().uuid() })
+    .safeParse({ imageId, productId });
+  if (!parsed.success) {
+    redirect(`/admin/products/${productId || ""}?error=${encodeURIComponent("Invalid image.")}`);
+  }
+
+  const result = await guard(async (db) => {
+    await db
+      .from("product_images")
+      .update({ is_primary: false })
+      .eq("product_id", parsed.data.productId)
+      .throwOnError();
+    await db
+      .from("product_images")
+      .update({ is_primary: true, sort_order: 0 })
+      .eq("id", parsed.data.imageId)
+      .throwOnError();
+  });
+
+  if (result.ok) {
+    updateTag("product-images");
+    revalidatePath(`/admin/products/${parsed.data.productId}`);
+    redirect(`/admin/products/${parsed.data.productId}?saved=1`);
+  }
+  redirect(`/admin/products/${parsed.data.productId}?error=${encodeURIComponent(GENERIC_ERROR)}`);
+}
+
+/** Deletes the Storage object and the row. Storage cleanup failure does not block row deletion. */
+export async function deleteProductImage(fd: FormData): Promise<void> {
+  const imageId = fdStr(fd, "image_id");
+  const productId = fdStr(fd, "product_id");
+  const parsed = z
+    .object({ imageId: z.string().uuid(), productId: z.string().uuid() })
+    .safeParse({ imageId, productId });
+  if (!parsed.success) {
+    redirect(`/admin/products/${productId || ""}?error=${encodeURIComponent("Invalid image.")}`);
+  }
+
+  const result = await guard(async (db) => {
+    const { data } = await db
+      .from("product_images")
+      .select("storage_path")
+      .eq("id", parsed.data.imageId)
+      .maybeSingle();
+    const path = (data as { storage_path: string } | null)?.storage_path;
+
+    await db.from("product_images").delete().eq("id", parsed.data.imageId).throwOnError();
+
+    if (path) {
+      const { error: rmErr } = await db.storage.from("product-images").remove([path]);
+      if (rmErr) console.error("[admin action] storage remove failed:", rmErr.message);
+    }
+  });
+
+  if (result.ok) {
+    updateTag("product-images");
+    revalidatePath(`/admin/products/${parsed.data.productId}`);
+    redirect(`/admin/products/${parsed.data.productId}?saved=1`);
+  }
+  redirect(`/admin/products/${parsed.data.productId}?error=${encodeURIComponent(GENERIC_ERROR)}`);
+}
+
+// ---------------------------------------------------------------------------
 // Site settings — the single source of truth for contact data
 // ---------------------------------------------------------------------------
 

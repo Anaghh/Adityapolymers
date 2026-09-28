@@ -34,13 +34,13 @@ export default function QualityPage() {
 
   return (
     <>
-      <section className="bg-navy-900 text-white">
+      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
         <Container className="py-10 sm:py-14">
-          <p className="eyebrow text-cta">QUALITY SYSTEM</p>
+          <p className="eyebrow text-ink-soft">QUALITY SYSTEM</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
             ISO 9001:2015, certified process, tested batches.
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-navy-100">
+          <p className="mt-4 max-w-2xl text-lg text-ink-soft">
             A documented quality management system across both Pune plants, with the full test
             panel run in-house on every batch before release. Current certificate copies are
             available on request.
