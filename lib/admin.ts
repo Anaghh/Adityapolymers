@@ -1,17 +1,17 @@
-﻿"use server";
+"use server";
 
 import { redirect } from "next/navigation";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { z } from "zod";
 import { getServiceRoleClient } from "@/lib/supabase";
 import { getAdminUser } from "@/lib/supabase/ssr";
 
 /**
  * Admin server actions. Every action:
- *   1. re-verifies the caller's admin_users row via the SSR (cookie) client â€”
+ *   1. re-verifies the caller's admin_users row via the SSR (cookie) client —
  *      the form is never trusted;
  *   2. operates through the service-role client, server-only;
- *   3. returns/redirects with a generic message â€” service-role errors are
+ *   3. returns/redirects with a generic message — service-role errors are
  *      logged, never surfaced raw.
  *
  * Env-missing and not-admin both collapse to `{ ok: false, error }` (or a
@@ -193,7 +193,7 @@ export async function upsertProduct(fd: FormData): Promise<AdminActionResult> {
   };
 
   const parsed = productSchema.safeParse(candidate);
-  if (!parsed.success) return { ok: false, error: "Check the form â€” some fields are invalid." };
+  if (!parsed.success) return { ok: false, error: "Check the form — some fields are invalid." };
 
   const p = parsed.data;
   const slug = p.slug ? slugify(p.slug) : slugify(p.sku) || slugify(p.name);
@@ -229,13 +229,13 @@ export async function upsertProduct(fd: FormData): Promise<AdminActionResult> {
 
   if (result.ok) {
     revalidatePath("/products");
-    revalidateTag("products", "default");
-    revalidateTag("catalog", "default");
+    updateTag("products");
+    updateTag("catalog");
   }
   return result;
 }
 
-/** Full form post â†’ save, then land back on the admin list (spec behaviour). */
+/** Full form post → save, then land back on the admin list (spec behaviour). */
 export async function saveProductFromForm(fd: FormData): Promise<void> {
   const result = await upsertProduct(fd);
   if (result.ok) {
@@ -258,8 +258,8 @@ export async function setProductActive(fd: FormData): Promise<void> {
 
   if (result.ok) {
     revalidatePath("/products");
-    revalidateTag("products", "default");
-    revalidateTag("catalog", "default");
+    updateTag("products");
+    updateTag("catalog");
     revalidatePath("/admin/products");
     redirect("/admin/products?saved=1");
   }
@@ -318,8 +318,8 @@ export async function upsertCategory(fd: FormData): Promise<AdminActionResult> {
 
   if (result.ok) {
     revalidatePath("/products");
-    revalidateTag("categories", "default");
-    revalidateTag("catalog", "default");
+    updateTag("categories");
+    updateTag("catalog");
   }
   return result;
 }
@@ -379,7 +379,7 @@ export async function uploadDownload(fd: FormData): Promise<AdminActionResult> {
 
   if (result.ok) {
     revalidatePath("/downloads");
-    revalidateTag("catalog", "default");
+    updateTag("catalog");
     revalidatePath("/admin/downloads");
   }
   return result;
@@ -405,7 +405,7 @@ export async function setDownloadActive(fd: FormData): Promise<void> {
 
   if (result.ok) {
     revalidatePath("/downloads");
-    revalidateTag("catalog", "default");
+    updateTag("catalog");
     revalidatePath("/admin/downloads");
     redirect("/admin/downloads?saved=1");
   }
@@ -427,9 +427,8 @@ export async function setTestimonialApproval(fd: FormData): Promise<void> {
   });
 
   if (result.ok) {
-    revalidatePath("/clients");
-    revalidateTag("testimonials", "default");
-    revalidateTag("catalog", "default");
+    updateTag("testimonials");
+    updateTag("catalog");
     revalidatePath("/admin/testimonials");
     redirect("/admin/testimonials?saved=1");
   }
@@ -437,7 +436,7 @@ export async function setTestimonialApproval(fd: FormData): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
-// Site settings â€” the single source of truth for contact data
+// Site settings — the single source of truth for contact data
 // ---------------------------------------------------------------------------
 
 const phoneSchema = z.object({
@@ -448,11 +447,20 @@ const phoneSchema = z.object({
 });
 
 export async function updateContactSettings(fd: FormData): Promise<AdminActionResult> {
-  // Parallel arrays (one entry per row, in row order) â†’ phones.
+  // Parallel arrays (one entry per row, in row order) → phones.
   const values = fd.getAll("phone_value").map(String);
   const displays = fd.getAll("phone_display").map(String);
   const labels = fd.getAll("phone_label").map(String);
-  const verified = fd.getAll("phone_verified").map((v) => String(v) === "on");
+  // Every row submits a hidden "off" before its checkbox; checked rows add
+  // "on" after it. Walk the flat list in document order so verified flags
+  // stay aligned with rows no matter which boxes are ticked.
+  const rawVerified = fd.getAll("phone_verified").map(String);
+  const verified: boolean[] = [];
+  for (let i = 0; i < rawVerified.length; i += 1) {
+    if (rawVerified[i] === "on") continue; // already consumed with its row
+    verified.push(rawVerified[i + 1] === "on");
+    if (rawVerified[i + 1] === "on") i += 1;
+  }
 
   const phones: z.infer<typeof phoneSchema>[] = [];
   for (let i = 0; i < values.length; i += 1) {
@@ -505,7 +513,7 @@ export async function updateContactSettings(fd: FormData): Promise<AdminActionRe
   });
 
   if (result.ok) {
-    revalidateTag("site-settings", "default");
+    updateTag("site-settings");
     revalidatePath("/", "layout");
     revalidatePath("/admin/settings");
   }

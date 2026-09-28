@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/container";
 import { EnquiryForm } from "@/components/enquiry/enquiry-form";
 import { getProducts, getSiteSettings } from "@/lib/data";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Get a Quote — Dr Bond Industrial Adhesives",
@@ -12,12 +12,32 @@ export const metadata: Metadata = {
   alternates: { canonical: "/enquiry" },
 };
 
-export default async function EnquiryPage() {
-  const [products, settings] = await Promise.all([getProducts(), getSiteSettings()]);
+export default async function EnquiryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ product?: string }>;
+}) {
+  const [{ product: requested }, products, settings] = await Promise.all([
+    searchParams,
+    getProducts(),
+    getSiteSettings(),
+  ]);
 
   const options = products
     .map((product) => ({ slug: product.slug, name: `${product.name} — ${product.applications}` }))
     .sort((a, b) => a.name.localeCompare(b.name));
+
+  // Catalog pages link /enquiry?product=AP-44 (the SKU); options carry slugs.
+  // Match on slug first, then name, then the "Dr Bond AP-44" display name.
+  // Resolved server-side so the prefilled select is present in the SSR HTML.
+  const needle = (requested ?? "").trim().toLowerCase();
+  const defaultProduct = needle
+    ? (
+        products.find((p) => p.slug.toLowerCase() === needle) ??
+        products.find((p) => p.sku.toLowerCase() === needle) ??
+        products.find((p) => p.name.toLowerCase().includes(needle))
+      )?.slug
+    : undefined;
 
   const verifiedPhones = settings.phones.filter((phone) => phone.verified);
   const whatsappHref = `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
@@ -42,7 +62,7 @@ export default async function EnquiryPage() {
       <section className="bg-paper">
         <Container className="grid gap-10 py-12 sm:py-16 lg:grid-cols-[1fr_320px]">
           <div>
-            <EnquiryForm products={options} />
+            <EnquiryForm products={options} defaultProduct={defaultProduct} />
           </div>
 
           <aside className="lg:sticky lg:top-24 lg:self-start">

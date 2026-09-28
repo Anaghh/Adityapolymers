@@ -11,6 +11,13 @@ export const dynamic = "force-dynamic";
  * (best-effort — the redirect must never break because logging did), then
  * 302s to the public Storage object in the `documents` bucket.
  */
+
+/** Same salt order as the enquiry route so hashes stay comparable across events. */
+function ipHash(ip: string): string {
+  return createHash("sha256")
+    .update(ip + (process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.ENQUIRY_HASH_SALT ?? "aditya-polymers"))
+    .digest("hex");
+}
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
@@ -31,9 +38,7 @@ export async function GET(
     try {
       await db.from("download_events").insert({
         download_id: download.id,
-        ip_hash: createHash("sha256")
-          .update((req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "") + (process.env.SUPABASE_SERVICE_ROLE_KEY ?? "aditya-polymers"))
-          .digest("hex"),
+        ip_hash: ipHash(req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? ""),
         user_agent: req.headers.get("user-agent") ?? null,
       });
     } catch {

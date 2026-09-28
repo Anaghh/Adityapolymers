@@ -30,7 +30,16 @@ export const metadata: Metadata = {
   },
   description:
     "ISO-certified manufacturer, supplier and exporter of synthetic, packaging and wood-working adhesives for paper tubes, corrugated boxes, fibre drums and furniture. Dr Bond brand, 6000 MTPA across two Pune plants, exports to the Middle East and Africa.",
-  alternates: { canonical: "/" },
+  // No layout-level canonical: a canonical set in a layout is inherited by
+  // every child page and would mark them duplicates of "/". Each page (and
+  // the home page) sets its own alternates.canonical instead.
+  openGraph: {
+    type: "website",
+    siteName: "Aditya Polymers",
+    locale: "en_IN",
+  },
+  twitter: { card: "summary_large_image" },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {

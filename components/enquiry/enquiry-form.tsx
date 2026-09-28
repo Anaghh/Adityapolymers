@@ -22,6 +22,27 @@ declare global {
 const FIELD =
   "w-full rounded-md border border-navy-200 bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-soft focus:border-navy-500 focus:outline-none focus:ring-2 focus:ring-navy-200";
 
+const UTM_KEY = "ap_utm";
+
+/** utm_* params from the URL, persisted for the session (landing → form hops). */
+function readUtm(): Record<string, string> {
+  if (typeof window === "undefined") return {};
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const fresh: Record<string, string> = {};
+    for (const [key, value] of params) {
+      if (key.startsWith("utm_") && value) fresh[key] = value;
+    }
+    if (Object.keys(fresh).length > 0) {
+      sessionStorage.setItem(UTM_KEY, JSON.stringify(fresh));
+      return fresh;
+    }
+    return JSON.parse(sessionStorage.getItem(UTM_KEY) ?? "{}") as Record<string, string>;
+  } catch {
+    return {};
+  }
+}
+
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
@@ -95,6 +116,7 @@ export function EnquiryForm({
           ? window.turnstile?.getResponse(widgetRef.current) || undefined
           : undefined,
       sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+      utm: readUtm(),
     };
 
     const clientCheck = enquirySchema.safeParse(payload);

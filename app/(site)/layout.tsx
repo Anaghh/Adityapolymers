@@ -1,12 +1,7 @@
-import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { getNav, getSiteSettings } from "@/lib/data";
-
-export async function generateMetadata(): Promise<Metadata> {
-  return { alternates: { canonical: "/" } };
-}
 
 /** Public shell: sticky conversion header, footer with verified NAP, WhatsApp float. */
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {

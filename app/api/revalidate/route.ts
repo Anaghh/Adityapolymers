@@ -10,7 +10,8 @@ export const dynamic = "force-dynamic";
  * webhook at POST /api/revalidate with the header
  * `x-revalidation-secret: $SUPABASE_REVALIDATION_SECRET`; the payload's
  * `table` maps to the matching cache tag. A direct `{ "tag": "products" }`
- * body is accepted too.
+ * body is accepted too. Tags expire with `{ expire: 0 }` — the webhook
+ * caller wants the data gone immediately, not stale-while-revalidate.
  */
 
 const TABLE_TAGS: Record<string, string[]> = {
@@ -60,6 +61,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  for (const tag of tags) revalidateTag(tag, { expire: 3600 });
+  for (const tag of tags) revalidateTag(tag, { expire: 0 });
   return NextResponse.json({ ok: true, revalidated: [...tags] });
 }

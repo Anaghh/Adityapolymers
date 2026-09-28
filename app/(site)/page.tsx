@@ -48,6 +48,9 @@ export default async function HomePage() {
     .map((slug) => allProducts.find((product) => product.slug === slug))
     .filter((product): product is Product => product !== undefined);
 
+  // Structured data is a public claim — only client-verified numbers go in it,
+  // matching the contact page's tel: gating.
+  const verifiedPhones = settings.phones.filter((phone) => phone.verified);
   const metroCount = locations.filter((entry) => entry.scope === "india_city").length;
   const labTests = getLabTests();
   const whatsappHref = `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
@@ -72,7 +75,7 @@ export default async function HomePage() {
       latitude: settings.geo.lat,
       longitude: settings.geo.lng,
     },
-    contactPoint: settings.phones.map((phone) => ({
+    contactPoint: verifiedPhones.map((phone) => ({
       "@type": "ContactPoint",
       telephone: phone.value,
       contactType: phone.label,
