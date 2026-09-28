@@ -4,9 +4,9 @@ import { ButtonLink } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
+    <section className="border-b border-line bg-white">
       <Container className="py-20 sm:py-28">
-        <p className="eyebrow text-ink-soft">404</p>
+        <p className="eyebrow text-cta-strong">404</p>
         <h1 className="mt-2 max-w-2xl font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
           That page is not here.
         </h1>
@@ -20,7 +20,7 @@ export default function NotFound() {
           </ButtonLink>
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 rounded-md border border-white/40 px-6 py-3.5 font-display text-base font-semibold tracking-wide text-white transition-colors hover:border-white/70 hover:bg-white/10"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-navy-200 bg-white px-6 py-3.5 font-display text-base font-semibold tracking-wide text-navy-900 transition-colors hover:border-navy-300 hover:bg-navy-50"
           >
             Home
           </Link>

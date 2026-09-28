@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-const outlineOnDark =
-  "inline-flex items-center justify-center gap-2 rounded-md border border-white/40 px-6 py-3.5 font-display text-base font-semibold tracking-wide text-white transition-colors hover:border-white/70 hover:bg-white/10";
+const outlineOnLight =
+  "inline-flex items-center justify-center gap-2 rounded-lg border border-navy-200 bg-white px-6 py-3.5 font-display text-base font-semibold tracking-wide text-navy-900 transition-colors hover:border-navy-300 hover:bg-navy-50";
 
 export default async function AboutPage() {
   const settings = await getSiteSettings();
@@ -41,9 +41,9 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
+      <section className="border-b border-line bg-white">
         <Container className="py-14 sm:py-20">
-          <p className="eyebrow text-ink-soft">ABOUT ADITYA POLYMERS</p>
+          <p className="eyebrow text-cta-strong">ABOUT ADITYA POLYMERS</p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
             25 years of making adhesives, not marketing them.
           </h1>
@@ -56,7 +56,7 @@ export default async function AboutPage() {
             <ButtonLink href="/enquiry" variant="primary" size="lg">
               Get a Quote
             </ButtonLink>
-            <a href="/infrastructure" className={outlineOnDark}>
+            <a href="/infrastructure" className={outlineOnLight}>
               See the plants
             </a>
           </div>

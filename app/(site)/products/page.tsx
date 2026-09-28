@@ -41,7 +41,7 @@ export default async function ProductsPage() {
     <>
       <HashShim />
 
-      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
+      <section className="border-b border-line bg-white">
         <Container className="py-16 sm:py-24">
           <p className="eyebrow rise-in text-cta">DR BOND ADHESIVES CATALOGUE</p>
           <h1 className="rise-in mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">

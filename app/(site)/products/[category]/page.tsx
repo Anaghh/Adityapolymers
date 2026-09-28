@@ -63,7 +63,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
 
   return (
     <>
-      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
+      <section className="border-b border-line bg-white">
         <Container className="py-10 sm:py-14">
           <Breadcrumbs items={crumbs} tone="light" />
           <p className="eyebrow mt-8 text-cta">DR BOND PRODUCT FAMILY</p>

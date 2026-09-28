@@ -10,8 +10,8 @@ import { BrandLockup } from "@/components/brand/brand-mark";
 
 /**
  * Global header + conversion bar: mascot lockup, verified phone click-to-call,
- * amber "Get a Quote" plate, WhatsApp. Light factory styling: white bar on
- * concrete page, hard bottom rule, sharp chips.
+ * amber "Get a Quote", WhatsApp — reachable in one click from every page.
+ * Corporate-clean: white sticky bar over the light page, quiet borders.
  */
 export function SiteHeader({
   categories,
@@ -36,7 +36,7 @@ export function SiteHeader({
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b-2 border-navy-950 bg-paper/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" aria-label="Dr Bond by Aditya Polymers, home">
           <BrandLockup />
@@ -48,10 +48,10 @@ export function SiteHeader({
               key={item.href}
               href={item.href}
               className={clsx(
-                "rounded-sharp-md px-3 py-2 font-display text-[13px] font-bold uppercase tracking-wide transition-colors",
+                "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 pathname === item.href
-                  ? "bg-navy-950 text-paper"
-                  : "text-ink-soft hover:bg-navy-50 hover:text-navy-900",
+                  ? "bg-navy-50 text-navy-900"
+                  : "text-ink-soft hover:text-navy-900",
               )}
             >
               {item.label}
@@ -62,10 +62,10 @@ export function SiteHeader({
         <div className="hidden items-center gap-2 lg:flex">
           <a
             href={`tel:${phone.value}`}
-            className="inline-flex items-center gap-2 px-2 py-2 font-mono text-sm font-medium text-navy-900 hover:text-navy-700"
+            className="inline-flex items-center gap-2 px-2 py-2 text-sm font-medium text-navy-900 hover:text-navy-700"
           >
             <Phone className="size-4" aria-hidden />
-            {phone.display}
+            <span className="font-mono">{phone.display}</span>
           </a>
           <Link href="/enquiry" className={buttonClass("primary")}>
             Get a Quote
@@ -75,7 +75,7 @@ export function SiteHeader({
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="rounded-sharp-md p-2 text-navy-900 lg:hidden"
+          className="rounded-lg p-2 text-navy-900 lg:hidden"
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
         >
@@ -84,14 +84,14 @@ export function SiteHeader({
       </div>
 
       {open ? (
-        <nav className="border-t border-line bg-paper px-4 py-4 lg:hidden" aria-label="Mobile">
+        <nav className="border-t border-line bg-white px-4 py-4 lg:hidden" aria-label="Mobile">
           <ul className="grid gap-1">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-sharp-md px-3 py-2.5 font-display text-sm font-bold uppercase tracking-wide text-ink hover:bg-navy-50"
+                  className="block rounded-lg px-3 py-2.5 font-medium text-ink hover:bg-navy-50"
                 >
                   {item.label}
                 </Link>
@@ -102,7 +102,7 @@ export function SiteHeader({
                 <Link
                   href={`/products/${c.slug}`}
                   onClick={() => setOpen(false)}
-                  className="block rounded-sharp-md px-3 py-2 pl-6 font-mono text-xs text-ink-soft hover:bg-navy-50"
+                  className="block rounded-lg px-3 py-2 pl-6 text-sm text-ink-soft hover:bg-navy-50"
                 >
                   {c.shortName}
                 </Link>

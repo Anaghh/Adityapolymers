@@ -119,7 +119,7 @@ export async function ProductPageBody({ slug, segments }: { slug: string; segmen
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
 
-      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
+      <section className="border-b border-line bg-white">
         <Container className="py-10 sm:py-14">
           <Breadcrumbs items={crumbs} tone="light" />
           <p className="eyebrow mt-8 text-cta">{own.shortName.toUpperCase()}</p>

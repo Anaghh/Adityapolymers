@@ -2,14 +2,14 @@ import { Container } from "@/components/ui/container";
 import { getKeyFigures } from "@/lib/data";
 
 /**
- * Key-figures band: a concrete plate with a blueprint hairline grid, mono
- * counters stamped like plant-floor signage. Sits directly beneath heroes.
+ * Key-figures band: a quiet concrete strip with mono counters. Sits directly
+ * beneath heroes on landing pages; numbers carry the section, no decoration.
  */
 export function FiguresBand({ tone = "concrete" }: { tone?: "concrete" | "navy" }) {
   const figures = getKeyFigures();
   const dark = tone === "navy";
   return (
-    <div className={dark ? "bg-navy-950 text-white" : "blueprint-grid bg-concrete"}>
+    <div className={dark ? "bg-navy-950 text-white" : "border-y border-line bg-concrete"}>
       <Container className="py-10">
         <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
           {figures.map((figure) => (

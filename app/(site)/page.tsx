@@ -26,9 +26,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-/** Secondary CTA on the light hero: stamped outline plate. */
+/** Secondary CTA on the light hero. */
 const outlineOnLight =
-  "inline-flex items-center justify-center gap-2 rounded-md border-2 border-navy-950 px-6 py-3.5 font-display text-base font-bold uppercase tracking-wide text-navy-950 shadow-stamp-sm press transition-all hover:bg-navy-50";
+  "inline-flex items-center justify-center gap-2 rounded-lg border border-navy-200 bg-white px-6 py-3.5 font-display text-base font-semibold tracking-wide text-navy-900 transition-colors hover:border-navy-300 hover:bg-navy-50";
 
 function truncate(text: string, max: number): string {
   return text.length <= max ? text : `${text.slice(0, Math.max(0, max - 1)).trimEnd()}…`;
@@ -123,13 +123,12 @@ export default async function HomePage() {
       />
 
       {/* ——— Hero ——— */}
-      <section className="blueprint-grid border-b-2 border-navy-950 bg-concrete">
+      <section className="border-b border-line bg-white">
         <Container className="grid gap-10 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           <div>
-            <p className="eyebrow rise-in text-ink-soft">DR BOND INDUSTRIAL ADHESIVES, PUNE</p>
+            <p className="eyebrow rise-in text-cta-strong">DR BOND INDUSTRIAL ADHESIVES, PUNE</p>
             <h1 className="rise-in mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-navy-950 sm:text-5xl">
-              Industrial adhesives for packaging and woodworking.{" "}
-              <span className="bg-cta px-1.5">Engineered in Pune.</span>
+              Industrial adhesives for packaging and woodworking, engineered in Pune.
             </h1>
             <p className="rise-in mt-5 max-w-2xl text-lg text-ink-soft">
               Dr Bond adhesives, made on our own Pune reactors. ISO 9001:2015 certified, 6,000
@@ -145,10 +144,11 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="rise-in hidden lg:block">
-            <div className="rounded-lg border-2 border-navy-950 bg-paper p-6 shadow-stamp">
-              <BrandMark className="size-28" />
-              <p className="mt-3 max-w-[11rem] font-mono text-[11px] uppercase leading-4 tracking-wide text-ink-soft">
-                Safety-goggled quality, bonded in Pune since 2000
+            <div className="rounded-xl border border-line bg-concrete p-8">
+              <BrandMark className="size-32" />
+              <p className="mt-4 max-w-[13rem] text-sm leading-6 text-ink-soft">
+                The Dr Bond mark: a safety-goggled droplet, our promise of tested, reliable
+                adhesive from a factory you can audit.
               </p>
             </div>
           </div>
@@ -232,7 +232,7 @@ export default async function HomePage() {
           intro="The figures below are audited on site, the same ones our customers check during vendor audits."
         />
         <div className="mt-10 overflow-hidden rounded-lg border border-line bg-white">
-          <div className="bg-navy-950 px-4 py-3 font-display text-sm font-bold uppercase tracking-wide text-paper">
+          <div className="bg-navy-950 px-4 py-3 font-display text-sm font-semibold text-paper">
             Aditya Polymers capability sheet
           </div>
           <table className="spec-table w-full border-collapse">
@@ -283,11 +283,10 @@ export default async function HomePage() {
       </Band>
 
       {/* ——— Closing CTA ——— */}
-      <section className="hazard-stripe" aria-hidden />
       <section className="bg-navy-950">
         <Container className="flex flex-col gap-8 py-16 sm:py-20 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h2 className="font-display text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl">
+            <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Need a grade specified?
             </h2>
             <p className="mt-3 max-w-xl text-navy-100">

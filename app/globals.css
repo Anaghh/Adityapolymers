@@ -1,27 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  /* ——— Light factory theme: concrete + ink + safety amber ———
-     Amber stays reserved exclusively for conversion actions.
-     Neutrals are concrete/warm-grey (factory floor), not beige. */
-  --color-paper: #f6f6f3;
-  --color-concrete: #ebebe6;
-  --color-concrete-dark: #dcdcd5;
-  --color-line: #d8d8d0;
+  /* ——— Corporate light theme: white + deep navy + amber accent ———
+     Amber is reserved exclusively for conversion actions (Get a Quote,
+     Download TDS, WhatsApp) so the eye always knows where to act.
+     Neutrals are cool and quiet; headings are sentence case. */
+  --color-paper: #f7f8fa;
+  --color-concrete: #eef1f4;
+  --color-concrete-dark: #e2e6ea;
+  --color-line: #e2e6ea;
 
-  --color-navy-950: #14181d;
-  --color-navy-900: #1b222b;
-  --color-navy-800: #232c38;
-  --color-navy-700: #2e3a49;
-  --color-navy-600: #3d4c5f;
-  --color-navy-300: #97a5b4;
-  --color-navy-200: #c2ccd6;
-  --color-navy-100: #e2e8ee;
-  --color-navy-50: #f0f3f6;
+  --color-navy-950: #101828;
+  --color-navy-900: #16233a;
+  --color-navy-800: #1d2f4d;
+  --color-navy-700: #25406b;
+  --color-navy-600: #33517f;
+  --color-navy-300: #9aa9bf;
+  --color-navy-200: #c3cddb;
+  --color-navy-100: #e1e7f0;
+  --color-navy-50: #f0f4f9;
 
-  --color-ink: #1f2933;
-  --color-ink-soft: #5c6a76;
-  --color-ink-faint: #8a95a0;
+  --color-ink: #1c2630;
+  --color-ink-soft: #5a6875;
+  --color-ink-faint: #8b96a1;
 
   --color-cta: #f2a81d;
   --color-cta-strong: #d98f06;
@@ -33,17 +34,6 @@
   --font-sans: var(--font-plex-sans), system-ui, -apple-system, sans-serif;
   --font-display: var(--font-archivo), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "Cascadia Mono", monospace;
-
-  /* Radius system (shape lock): controls sharp-md, containers sharp-lg,
-     chips sharp-full. Overriding Tailwind's defaults so every rounded-md /
-     rounded-lg in the codebase follows the sharp system automatically. */
-  --radius-sm: 2px;
-  --radius-md: 3px;
-  --radius-lg: 5px;
-  --radius-xl: 6px;
-  --radius-sharp-md: 3px;
-  --radius-sharp-lg: 5px;
-  --radius-sharp-full: 999px;
 }
 
 body {
@@ -60,58 +50,14 @@ body {
   color: var(--color-navy-950);
 }
 
-/* ——— Factory texture utilities ——— */
-
-/* Section label in tracked caps — signage voice.
-   RATIONED: max 1 eyebrow per 3 sections on any page (design-taste rule). */
+/* Section label in tracked caps — used sparingly (rationed: max 1 per 3
+   sections; heroes only). */
 .eyebrow {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-size: 0.7rem;
-}
-
-/* Blueprint hairline grid — use as a section background on light bands. */
-.blueprint-grid {
-  background-image:
-    linear-gradient(var(--color-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-/* Diagonal hazard stripes — sparingly: section dividers and the footer top
-   edge only. Amber on ink, 45 degrees. */
-.hazard-stripe {
-  height: 8px;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--color-navy-950) 0 14px,
-    var(--color-cta) 14px 28px
-  );
-}
-
-/* Stamped-metal shadow: hard offset, no blur — signage/print look. */
-.shadow-stamp {
-  box-shadow: 4px 4px 0 0 var(--color-navy-950);
-}
-.shadow-stamp-sm {
-  box-shadow: 2px 2px 0 0 var(--color-navy-950);
-}
-.shadow-stamp-amber {
-  box-shadow: 4px 4px 0 0 var(--color-cta-strong);
-}
-
-/* Press effect: active CTAs physically push into their shadow. */
-.press {
-  transition: transform 120ms ease, box-shadow 120ms ease;
-}
-.press:active:not(:disabled) {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 0 var(--color-navy-950);
-}
-.press-amber:active:not(:disabled) {
-  box-shadow: 2px 2px 0 0 var(--color-cta-strong);
+  font-size: 0.75rem;
 }
 
 /* Datasheet-style spec tables: figures align in mono like a real TDS. */
@@ -138,15 +84,15 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Subtle motion: fade/translate entry only (MOTION dial is 2: minimal). */
+/* Subtle motion: fade/translate entry only. */
 @media (prefers-reduced-motion: no-preference) {
   .rise-in {
-    animation: rise-in 0.4s ease-out both;
+    animation: rise-in 0.45s ease-out both;
   }
   @keyframes rise-in {
     from {
       opacity: 0;
-      transform: translateY(6px);
+      transform: translateY(8px);
     }
     to {
       opacity: 1;
@@ -156,6 +102,6 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-navy-900);
+  outline: 2px solid var(--color-navy-700);
   outline-offset: 2px;
 }
