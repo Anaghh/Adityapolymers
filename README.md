@@ -55,20 +55,15 @@ database-backed features stay unavailable.
    | `SUPABASE_SERVICE_ROLE_KEY` | Admin/API server operations | Production; Preview if testing admin |
    | `RESEND_API_KEY` | Sending enquiry email | Production; Preview if testing forms |
    | `ENQUIRY_NOTIFY_EMAIL` | Recipient inbox for enquiry notifications | Production; Preview if testing forms |
-   | `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile form verification | Production; Preview if testing forms |
-   | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Showing Turnstile on forms | Production; Preview if testing forms |
-   | `UPSTASH_REDIS_REST_URL` | Upstash rate limiting | Production; Preview if testing forms |
-   | `UPSTASH_REDIS_REST_TOKEN` | Upstash rate limiting | Production; Preview if testing forms |
    | `SUPABASE_REVALIDATION_SECRET` | Securing the Supabase revalidation webhook | Production; Preview if configuring a preview webhook |
    | `NEXT_PUBLIC_SITE_URL` | Canonical site URL and metadata | Production: `https://www.adityapolymers.com`; Preview: that deployment's URL |
    | `NEXT_PUBLIC_WHATSAPP_NUMBER` | WhatsApp contact link | Production, Preview |
    | `NEXT_PUBLIC_GA4_ID` | Google Analytics (optional) | Production; Preview if analytics is desired there |
 
    Values beginning with `NEXT_PUBLIC_` are included in browser code. Never use that prefix
-   for a secret. Keep `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`,
-   `UPSTASH_REDIS_REST_TOKEN`, and `SUPABASE_REVALIDATION_SECRET` server-only. For a first
-   deploy without integrations, you can skip the integration variables; the fallback catalog
-   still renders.
+   for a secret. Keep `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, and
+   `SUPABASE_REVALIDATION_SECRET` server-only. For a first deploy without integrations, you
+   can skip the integration variables; the fallback catalog still renders.
 4. **Check the deployment.** Open the URL Vercel gives the project and confirm the home page
    and catalog load. To publish database-backed content or use admin, first finish
    [Setup: Supabase](#setup-supabase), then set the Supabase variables above and redeploy.
@@ -85,11 +80,11 @@ database-backed features stay unavailable.
    Configure the webhook only after the domain and secret are in place.
 
 Third-party services used by the full production setup: **Supabase** (database and auth),
-**Resend** (enquiry notifications; verify the sending domain's SPF/DKIM), **Cloudflare
-Turnstile** (form captcha), **Upstash** (rate limiting), and optionally **Google Analytics 4**.
+**Resend** (enquiry notifications; verify the sending domain's SPF/DKIM), and optionally
+**Google Analytics 4**. Form abuse is handled without a third-party service: a honeypot field
+filters bots, and junk leads are triaged to the spam status in the admin.
 
-Third-party free tiers used: **Resend** (email notifications — verify SPF/DKIM for the domain),
-**Cloudflare Turnstile** (form captcha), **Upstash** (rate limiting).
+Third-party free tiers used: **Resend** (email notifications — verify SPF/DKIM for the domain).
 
 ## Launch checklist (client sign-offs)
 

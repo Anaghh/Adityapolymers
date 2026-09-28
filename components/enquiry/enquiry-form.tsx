@@ -1,23 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { enquirySchema, fieldErrorsOf, ENQUIRY_TYPES } from "@/lib/enquiry";
 
 type ProductOption = { slug: string; name: string };
 
 type Status = "idle" | "submitting" | "success" | "error";
-
-declare global {
-  interface Window {
-    turnstile?: {
-      render: (el: string | HTMLElement, opts: Record<string, unknown>) => string;
-      getResponse: (id?: string) => string;
-      reset: (id?: string) => void;
-      remove: (id: string) => void;
-    };
-    onTurnstileLoad?: () => void;
-  }
-}
 
 const FIELD =
   "w-full rounded-md border border-navy-200 bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-soft focus:border-navy-500 focus:outline-none focus:ring-2 focus:ring-navy-200";
@@ -59,38 +47,9 @@ export function EnquiryForm({
   products: ProductOption[];
   defaultProduct?: string;
 }) {
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-  const widgetRef = useRef<string | undefined>(undefined);
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formMessage, setFormMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!turnstileSiteKey) return;
-    const render = () => {
-      const box = document.getElementById("turnstile-box");
-      if (!box || widgetRef.current !== undefined || !window.turnstile) return;
-      widgetRef.current = window.turnstile.render(box, { sitekey: turnstileSiteKey, theme: "light" });
-    };
-    if (window.turnstile) {
-      render();
-    } else {
-      window.onTurnstileLoad = render;
-      const script = document.createElement("script");
-      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad";
-      script.async = true;
-      document.head.appendChild(script);
-    }
-    return () => {
-      try {
-        if (widgetRef.current !== undefined) window.turnstile?.remove(widgetRef.current);
-      } catch {
-        // widget already gone
-      }
-      widgetRef.current = undefined;
-      window.onTurnstileLoad = undefined;
-    };
-  }, [turnstileSiteKey]);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -111,10 +70,6 @@ export function EnquiryForm({
       quantityNote: get("quantityNote") || undefined,
       message: get("message") || undefined,
       website: get("website") || undefined,
-      turnstileToken:
-        turnstileSiteKey && widgetRef.current !== undefined
-          ? window.turnstile?.getResponse(widgetRef.current) || undefined
-          : undefined,
       sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
       utm: readUtm(),
     };
@@ -142,20 +97,15 @@ export function EnquiryForm({
       if (res.ok && json.ok) {
         setStatus("success");
         form.reset();
-        window.turnstile?.reset(widgetRef.current);
         return;
       }
       if (json.errors) setErrors(json.errors);
       setFormMessage(
         json.code === "not_configured"
           ? "The enquiry desk is not connected yet — please call or WhatsApp us instead."
-          : json.code === "rate_limited"
-            ? "Too many submissions from this connection. Please try again in a few minutes."
-            : json.code === "captcha_failed"
-              ? "Please complete the human verification and submit again."
-              : res.ok
-                ? null
-                : "The enquiry could not be sent. Please call or WhatsApp us instead.",
+          : res.ok
+            ? null
+            : "The enquiry could not be sent. Please call or WhatsApp us instead.",
       );
       setStatus("error");
     } catch {
@@ -314,13 +264,6 @@ export function EnquiryForm({
         <p className="mt-5 rounded-md bg-paper px-4 py-3 text-sm text-ink" role="alert">
           {formMessage}
         </p>
-      ) : null}
-
-      {turnstileSiteKey ? (
-        <div className="mt-6">
-          <div id="turnstile-box" />
-          <FieldError id="turnstile-error" message={errors.turnstileToken} />
-        </div>
       ) : null}
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

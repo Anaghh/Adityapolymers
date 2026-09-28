@@ -1,7 +1,5 @@
 import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 import { enquirySchema, fieldErrorsOf, type EnquiryPayload } from "@/lib/enquiry";
 import { sendEnquiryNotification } from "@/lib/email";
 import { getPublicClient } from "@/lib/supabase";
@@ -21,34 +19,6 @@ function ipHash(ip: string): string {
   return createHash("sha256")
     .update(ip + (process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.ENQUIRY_HASH_SALT ?? "aditya-polymers"))
     .digest("hex");
-}
-
-function rateLimit(ip: string): Promise<boolean> {
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token || !ip) return Promise.resolve(true);
-  const ratelimit = new Ratelimit({
-    redis: new Redis({ url, token }),
-    limiter: Ratelimit.slidingWindow(5, "10 m"),
-  });
-  return ratelimit.limit(`enquiry:${ipHash(ip)}`).then((r) => r.success);
-}
-
-async function verifyTurnstile(token: string | undefined): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return true; // not configured — form is open (dev/preview)
-  if (!token) return false;
-  try {
-    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      headers: { "content-type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ secret, response: token }),
-    });
-    const json = (await res.json()) as { success?: boolean };
-    return json.success === true;
-  } catch {
-    return false;
-  }
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
@@ -74,16 +44,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   }
   const data = parsed.data as EnquiryPayload;
-
-  const ip = clientIp(req);
-  const allowed = await rateLimit(ip);
-  if (!allowed) {
-    return NextResponse.json({ ok: false, code: "rate_limited" }, { status: 429 });
-  }
-
-  if (!(await verifyTurnstile(data.turnstileToken))) {
-    return NextResponse.json({ ok: false, code: "captcha_failed" }, { status: 403 });
-  }
 
   const db = getPublicClient();
   if (!db) {
@@ -130,7 +90,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     quantity_note: data.quantityNote ?? null,
     source_page: data.sourcePage ?? null,
     utm: data.utm ?? {},
-    ip_hash: ipHash(ip),
+    ip_hash: ipHash(clientIp(req)),
     user_agent: req.headers.get("user-agent") ?? null,
   });
   if (error) {

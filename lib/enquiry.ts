@@ -40,7 +40,6 @@ export const enquirySchema = z.object({
   quantityNote: z.string().trim().max(200, "Quantity note must be 200 characters or fewer.").optional(),
   /** Honeypot — empty for humans; the route handler silently accepts spam here. */
   website: z.string().max(200).optional(),
-  turnstileToken: z.string().max(2048).optional(),
   sourcePage: z.string().max(200).optional(),
   utm: z.record(z.string(), z.string()).optional(),
 }).superRefine((val, ctx) => {
