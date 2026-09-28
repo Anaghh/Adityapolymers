@@ -80,6 +80,15 @@ export type SiteSettings = {
 
 export type KeyFigure = { value: string; unit: string; label: string };
 
+export type ProductImage = {
+  id: string;
+  /** Storage path inside the public `product-images` bucket. */
+  storagePath: string;
+  alt: string;
+  sortOrder: number;
+  isPrimary: boolean;
+};
+
 export type DownloadDoc = {
   id: string;
   kind: "tds" | "sds" | "brochure";

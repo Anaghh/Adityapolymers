@@ -86,12 +86,31 @@ filters bots, and junk leads are triaged to the spam status in the admin.
 
 Third-party free tiers used: **Resend** (email notifications — verify SPF/DKIM for the domain).
 
+## Photography brief
+
+Real photography replaces the typographic placeholders. The product gallery
+(`components/catalog/product-gallery.tsx`) activates automatically once images are
+uploaded to the public `product-images` Storage bucket with a `product_images` row
+(`product_id`, `storage_path`, `alt`, `sort_order`, `is_primary`). No code change
+is needed.
+
+| Placement | Count | Minimum size | Content |
+| --- | --- | --- | --- |
+| Grade page gallery (primary) | 1 per grade | 1600×900 (16:9) | The packed grade in its industrial drum/pail, plant backdrop acceptable |
+| Grade page gallery (supporting) | 1-3 per grade | 1600×900 | Application in use (tube winding, box pasting, brush work), lab bench, batching |
+| Home / about hero band (future) | 2-3 | 2400×1350 | Plant floor wide shots: reactors, drum filling line, dispatch bay |
+
+Rules: no stock-photo people, no invented capacity/equipment claims in captions, no
+watermarks. Captions stay factual ("Dr Bond AP-44 in 35 kg drums, Chikhli plant").
+Until real photos are supplied, no placeholder imagery ships — the layout is honest
+about the gap instead of drawing fake reactors in CSS.
+
 ## Launch checklist (client sign-offs)
 
 - [ ] Current ISO certificate (verify **9001:2015**; number, scope, expiry) — never republish the 2008 claim
 - [ ] One reconciled phone set (legacy site had conflicting numbers; see site_settings)
 - [ ] One published email address (monitored inbox)
-- [ ] Real factory/product photography (typographic placeholders are used until then)
+- [ ] Real factory/product photography (see the photography brief above; the gallery activates on upload)
 - [ ] Permission for client logos / testimonials
 - [ ] DNS/registrar control + lowered TTLs before cutover
 - [ ] Google Search Console + Bing re-verification; GBP refresh; `readme.html` removal request

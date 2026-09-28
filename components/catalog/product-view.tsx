@@ -5,6 +5,7 @@ import { ArrowRight, FileDown } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { SpecTable } from "@/components/ui/spec-table";
+import { ProductGallery } from "@/components/catalog/product-gallery";
 import { Breadcrumbs, type Crumb } from "@/components/catalog/breadcrumbs";
 import { getCategories, getProduct, getProductsByCategory, getSiteSettings } from "@/lib/data";
 import type { Category, Product } from "@/lib/types";
@@ -128,6 +129,8 @@ export async function ProductPageBody({ slug, segments }: { slug: string; segmen
           <p className="mt-4 max-w-2xl text-lg text-navy-100">{product.applications}</p>
         </Container>
       </section>
+
+      <ProductGallery product={product} />
 
       <section className="bg-white">
         <Container className="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_300px]">

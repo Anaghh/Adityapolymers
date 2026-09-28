@@ -5,7 +5,7 @@ import type {
   Industry,
   LocationEntry,
   Product,
-  SiteSettings,
+  ProductImage,
   KeyFigure,
   Plant,
   Phone,
@@ -257,6 +257,41 @@ export async function getPlants(): Promise<Plant[]> {
     }
   }
   return content.SITE.plants.map((p) => ({ ...p }));
+}
+
+/**
+ * Product photos from the public `product-images` bucket. Returns empty until
+ * the client supplies real photography — the gallery then renders nothing and
+ * the page keeps its typographic layout. Ordered primary-first, then sort.
+ */
+export async function getProductImages(productId: string): Promise<ProductImage[]> {
+  const db = getPublicClient();
+  if (!db) return [];
+  try {
+    const { data } = await unstable_cache(
+      async () =>
+        await db
+          .from("product_images")
+          .select("id, storage_path, alt, sort_order, is_primary")
+          .eq("product_id", productId)
+          .order("is_primary", { ascending: false })
+          .order("sort_order"),
+      ["product-images", productId],
+      { tags: [TAG_ALL, "product-images"], revalidate: 3600 },
+    )();
+    if (!data) return [];
+    return data.map(
+      (row: Record<string, unknown>): ProductImage => ({
+        id: row.id as string,
+        storagePath: row.storage_path as string,
+        alt: (row.alt as string) ?? "",
+        sortOrder: (row.sort_order as number) ?? 0,
+        isPrimary: (row.is_primary as boolean) ?? false,
+      }),
+    );
+  } catch {
+    return [];
+  }
 }
 
 export function getKeyFigures(): KeyFigure[] {
